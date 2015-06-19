@@ -3,6 +3,7 @@ package com.example.gleb.dentistcard;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -27,6 +28,8 @@ public class Diagnoses extends Pattern {
         setContentView(R.layout.diagnoses);
 
         listView = (ListView) findViewById(R.id.diagnoseListView);
+        View header = (View) getLayoutInflater().inflate(R.layout.viewheaderdiagnoses, null);
+        listView.addHeaderView(header);
         new Loader().execute();
     }
 
