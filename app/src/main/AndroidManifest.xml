@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.gleb.dentistcard" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".Navigator"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Countries">
+        </activity>
+        <activity
+            android:name=".Posts">
+        </activity>
+        <activity
+            android:name=".Kvalifications">
+        </activity>
+        <activity
+            android:name=".Changes">
+        </activity>
+        <activity
+            android:name=".DepartmentsDoctors">
+        </activity>
+        <activity
+            android:name=".Doctors">
+        </activity>
+        <activity
+            android:name=".Timetables">
+        </activity>
+        <activity
+            android:name=".Cities">
+        </activity>
+        <activity
+            android:name=".Particients">
+        </activity>
+        <activity
+            android:name=".Diagnoses">
+        </activity>
+        <activity
+            android:name=".Registrations">
+        </activity>
+        <activity
+            android:name=".Tickets">
+        </activity>
+        <activity
+            android:name=".Recommendations">
+        </activity>
+        <activity
+            android:name=".Insert">
+        </activity>
+    </application>
+
+</manifest>
