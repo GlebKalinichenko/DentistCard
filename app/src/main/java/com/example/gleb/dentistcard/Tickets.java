@@ -3,6 +3,7 @@ package com.example.gleb.dentistcard;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.ListView;
 
@@ -30,6 +31,8 @@ public class Tickets extends Pattern {
         setContentView(R.layout.tickets);
 
         listView = (ListView) findViewById(R.id.ticketListView);
+        View header = (View) getLayoutInflater().inflate(R.layout.viewheadertickets, null);
+        listView.addHeaderView(header);
         new Loader().execute();
     }
 
