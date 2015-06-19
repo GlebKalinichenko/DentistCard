@@ -3,6 +3,7 @@ package com.example.gleb.dentistcard;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -28,8 +29,9 @@ public class Registrations extends Pattern {
         setContentView(R.layout.registration);
 
         listView = (ListView) findViewById(R.id.registrationListView);
+        View header = (View) getLayoutInflater().inflate(R.layout.viewheaderregistrations, null);
+        listView.addHeaderView(header);
         new Loader().execute();
-
     }
 
     public class Loader extends AsyncTask<String, String, String[]> {

@@ -25,4 +25,5 @@
     <string name="Recommendation">Р-ции</string>
     <string name="Insert">Добавить</string>
     <string name="Send">Отправлено</string>
+    <string name="RegistrationFull">Регистрация</string>
 </resources>
