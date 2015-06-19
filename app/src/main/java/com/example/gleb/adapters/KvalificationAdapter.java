@@ -27,8 +27,8 @@ public class KvalificationAdapter extends ArrayAdapter<String> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View view;  // создаем itemView из заданного layout
+         public View getView(int position, View convertView, ViewGroup parent) {
+        View view;  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ itemView пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ layout
         if (convertView == null) {
             view = mInflater.inflate(R.layout.kvalification_item_row, parent, false);
         } else {

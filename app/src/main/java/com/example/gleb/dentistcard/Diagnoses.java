@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.gleb.adapters.DiagnoseAdapter;
 import com.example.gleb.adapters.ParticientAdapter;
 
 import org.json.JSONArray;
@@ -66,8 +67,8 @@ public class Diagnoses extends Pattern {
 
         @Override
         protected void onPostExecute(String[] value) {
-            adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, value);
-            //adapter = new ParticientAdapter(getBaseContext(), arrayFIO, arrayAddreses, arrayCityKod, arrayPhoneNumber, arrayFIOParent, arrayDateBorn);
+            //adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, value);
+            adapter = new DiagnoseAdapter(getBaseContext(), arrayDiagnoses);
             //adapter = new CountryAdapter(getApplicationContext(), R.layout.countries_item_row, value);
             listView.setAdapter(adapter);
 
