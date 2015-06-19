@@ -44,6 +44,9 @@ public class Countries extends Pattern {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /**
+                 * View for delete record
+                 */
                 AlertDialog.Builder builder = new AlertDialog.Builder(Countries.this);
                 View dialogView = LayoutInflater.from(Countries.this).inflate(R.layout.update_country, null);
                 builder.setView(dialogView);
