@@ -3,6 +3,7 @@ package com.example.gleb.dentistcard;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 
 import com.example.gleb.adapters.ChangeAdapter;
@@ -32,6 +33,8 @@ public class Recommendations extends Pattern {
         setContentView(R.layout.recommendation);
 
         listView = (ListView) findViewById(R.id.recommendationListView);
+        View header = (View) getLayoutInflater().inflate(R.layout.recommendation, null);
+        listView.addHeaderView(header);
         new Loader().execute();
     }
 
