@@ -44,7 +44,7 @@ public class ParticientAdapter extends ArrayAdapter<String> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view;  // создаем itemView из заданного layout
+        View view;
         if (convertView == null) {
             view = mInflater.inflate(R.layout.particient_item_row, parent, false);
         } else {

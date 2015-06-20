@@ -19,7 +19,10 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,37 +68,28 @@ public class Insert extends ActionBarActivity {
         protected String doInBackground(String... params) {
             String country = countryEditText.getText().toString();
             Log.d(TAG, country);
-            try {
-                List<NameValuePair> param = new ArrayList<NameValuePair>();
-                param.add(new BasicNameValuePair("country", country));
-                Log.d(TAG, param.get(0).toString());
 
-                // getting product details by making HTTP request
-                jsonParser.makeHttpRequest("http://dentists.16mb.com/InsertQuery/InsertCountry.php", param);
+            HttpClient client = new DefaultHttpClient();
+            HttpPost post = new HttpPost("http://dentists.16mb.com/InsertQuery/InsertCountry.php");
+            HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); // Timeout
+            HttpResponse response;
+            JSONObject json = new JSONObject();
+
+            try {
+                json.put("country", country);
+                post.setHeader("json", json.toString());
+                StringEntity se = new StringEntity(json.toString());
+                se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+                post.setEntity(se);
+                response = client.execute(post);
+
+                if (response != null) {
+                    InputStream in = response.getEntity().getContent(); // Get the
+                    Log.i("Read from Server", in.toString());
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-//            String json = "";
-//
-//            JSONObject jsonObject = new JSONObject();
-//            try {
-//                jsonObject.accumulate("country", country);
-//                json = jsonObject.toString();
-//                StringEntity se = new StringEntity(json);
-//
-//                httpPost.setEntity(se);
-//                httpPost.setHeader("Accept", "application/json");
-//                httpPost.setHeader("Content-type", "application/json");
-//                HttpResponse httpResponse = httpClient.execute(httpPost);
-//                InputStream inputStream = httpResponse.getEntity().getContent();
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            } catch (UnsupportedEncodingException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
 
             return null;
         }

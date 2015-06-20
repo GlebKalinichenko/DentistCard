@@ -27,4 +27,5 @@
     <string name="RecommedationFull">Рекомендации</string>
     <string name="Insert">Добавить</string>
     <string name="Send">Отправлено</string>
+    <string name="InsertCountry">Добавление страны</string>
 </resources>

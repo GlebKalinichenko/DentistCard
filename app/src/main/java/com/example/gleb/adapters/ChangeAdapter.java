@@ -28,7 +28,7 @@ public class ChangeAdapter extends ArrayAdapter<String> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view;  // создаем itemView из заданного layout
+        View view;
         if (convertView == null) {
             view = mInflater.inflate(R.layout.changes_item_row, parent, false);
         } else {
