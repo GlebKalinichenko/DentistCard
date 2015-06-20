@@ -58,7 +58,7 @@
             android:name=".Recommendations">
         </activity>
         <activity
-            android:name=".Insert">
+            android:name="com.example.gleb.insert.InsertCountry">
         </activity>
     </application>
 

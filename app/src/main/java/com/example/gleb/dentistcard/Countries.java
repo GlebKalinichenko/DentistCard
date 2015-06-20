@@ -1,23 +1,19 @@
 package com.example.gleb.dentistcard;
 
-import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.gleb.adapters.CountryAdapter;
+import com.example.gleb.insert.InsertCountry;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -123,7 +119,7 @@ public class Countries extends Pattern {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.addRecord) {
-            Intent intent = new Intent(this, Insert.class);
+            Intent intent = new Intent(this, InsertCountry.class);
             startActivity(intent);
             return true;
         }
