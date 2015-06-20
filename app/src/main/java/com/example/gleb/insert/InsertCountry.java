@@ -39,19 +39,13 @@ import java.util.List;
 /**
  * Created by Gleb on 15.06.2015.
  */
-public class InsertCountry extends ActionBarActivity {
-    public static final String TAG = "TAG";
+public class InsertCountry extends InsertPattern {
     private EditText countryEditText;
-    public HttpClient httpClient;
-    public HttpPost httpPost;
-    public Button insertButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.insert_value);
-
-        httpClient = new DefaultHttpClient();
 
         countryEditText = (EditText) findViewById(R.id.countryEditText);
         insertButton = (Button) findViewById(R.id.insertCountryButton);
@@ -70,8 +64,8 @@ public class InsertCountry extends ActionBarActivity {
             String country = countryEditText.getText().toString();
             Log.d(TAG, country);
 
-            HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost("http://dentists.16mb.com/InsertQuery/InsertCountry.php");
+            client = new DefaultHttpClient();
+            post = new HttpPost("http://dentists.16mb.com/InsertQuery/InsertCountry.php");
             HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); // Timeout
             HttpResponse response;
             JSONObject json = new JSONObject();
