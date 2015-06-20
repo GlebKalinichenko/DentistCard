@@ -24,6 +24,7 @@
     <string name="ParticientsShortest">П-енты</string>
     <string name="Diagnoses">Диагнозы</string>
     <string name="DiagnosesShortest">Д-нозы</string>
+    <string name="Diagnose">Диагноз:</string>
     <string name="Registration">Р-ция</string>
     <string name="RegistrationFull">Регистрация</string>
     <string name="Ticket">Билеты</string>
@@ -35,4 +36,5 @@
     <string name="InsertCity">Добавление города</string>
     <string name="InsertChange">Добавление смены</string>
     <string name="InsertDepartmentDoctor">Добавление подраздления врача</string>
+    <string name="InsertDiagnose">Добавление диагноза</string>
 </resources>
