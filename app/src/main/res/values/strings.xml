@@ -12,6 +12,7 @@
     <string name="KvalificationShortest">Ква-ции</string>
     <string name="Changes">Смена</string>
     <string name="Department">Типы врачей</string>
+    <string name="DepartmentDoctor">Тип врача:</string>
     <string name="Doctors">Врачи</string>
     <string name="Timetables">Расписание работы</string>
     <string name="TimetablesShortest">Рас-ние</string>
@@ -33,4 +34,5 @@
     <string name="InsertCountry">Добавление страны</string>
     <string name="InsertCity">Добавление города</string>
     <string name="InsertChange">Добавление смены</string>
+    <string name="InsertDepartmentDoctor">Добавление подраздления врача</string>
 </resources>
