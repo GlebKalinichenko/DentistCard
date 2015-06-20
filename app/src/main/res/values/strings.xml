@@ -18,6 +18,7 @@
     <string name="DateWork">Дата работы</string>
     <string name="DoctorKod">Врач</string>
     <string name="ChangeKod">Смена</string>
+    <string name="Change">Смена:</string>
     <string name="Particients">Пациенты</string>
     <string name="ParticientsShortest">П-енты</string>
     <string name="Diagnoses">Диагнозы</string>
@@ -31,4 +32,5 @@
     <string name="Send">Отправлено</string>
     <string name="InsertCountry">Добавление страны</string>
     <string name="InsertCity">Добавление города</string>
+    <string name="InsertChange">Добавление смены</string>
 </resources>
