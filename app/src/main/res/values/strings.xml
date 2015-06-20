@@ -4,7 +4,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="Cities">Города</string>
+    <string name="City">Город:</string>
     <string name="Countries">Страны</string>
+    <string name="Country">Страна:</string>
     <string name="Posts"> Должности</string>
     <string name="Kvalifications">Квалификации</string>
     <string name="KvalificationShortest">Ква-ции</string>
@@ -28,4 +30,5 @@
     <string name="Insert">Добавить</string>
     <string name="Send">Отправлено</string>
     <string name="InsertCountry">Добавление страны</string>
+    <string name="InsertCity">Добавление города</string>
 </resources>

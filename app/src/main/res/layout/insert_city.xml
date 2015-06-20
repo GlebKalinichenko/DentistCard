@@ -3,4 +3,69 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView android:id="@+id/txtHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:textStyle="bold"
+        android:textSize="22dp"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:text="@string/InsertCity"
+        android:background="#336699" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Country"
+            android:id="@+id/countryKodTextView"
+            android:layout_margin="15dp"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:id="@+id/countryKodEditText"
+            android:layout_gravity="center"
+            android:background="@drawable/insert_edittext"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/City"
+            android:id="@+id/cityTextView"
+            android:layout_margin="15dp"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:id="@+id/cityEditText"
+            android:layout_gravity="center"
+            android:background="@drawable/insert_edittext"/>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Insert"
+        android:id="@+id/insertCityButton"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"/>
 </LinearLayout>

@@ -60,6 +60,9 @@
         <activity
             android:name="com.example.gleb.insert.InsertCountry">
         </activity>
+        <activity
+            android:name="com.example.gleb.insert.InsertCity">
+        </activity>
     </application>
 
 </manifest>

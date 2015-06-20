@@ -22,7 +22,7 @@
         android:layout_margin="15dp"
         android:id="@+id/countryEditText"
         android:layout_gravity="center"
-        android:background="@drawable/insert_edittext"/>/>
+        android:background="@drawable/insert_edittext"/>
 
     <Button
         android:layout_width="wrap_content"
