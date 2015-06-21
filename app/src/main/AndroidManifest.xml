@@ -78,6 +78,9 @@
         <activity
             android:name="com.example.gleb.insert.InsertKvalification">
         </activity>
+        <activity
+            android:name="com.example.gleb.insert.InsertParticient">
+        </activity>
     </application>
 
 </manifest>
