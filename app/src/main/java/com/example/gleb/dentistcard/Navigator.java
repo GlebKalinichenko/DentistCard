@@ -24,6 +24,7 @@ public class Navigator extends ActionBarActivity {
     private Button registrationButton;
     private Button ticketButton;
     private Button recommendationButton;
+    private Button postButton;
 
 
     @Override
@@ -43,6 +44,7 @@ public class Navigator extends ActionBarActivity {
         registrationButton = (Button) findViewById(R.id.registrationButton);
         ticketButton = (Button) findViewById(R.id.ticketButton);
         recommendationButton = (Button) findViewById(R.id.recommndationButton);
+        postButton = (Button) findViewById(R.id.postButton);
 
         countryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +139,14 @@ public class Navigator extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), Recommendations.class);
+                startActivity(intent);
+            }
+        });
+
+        postButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), Posts.class);
                 startActivity(intent);
             }
         });
