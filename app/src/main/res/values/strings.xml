@@ -11,7 +11,8 @@
     <string name="Post">Должность</string>
     <string name="Kvalifications">Квалификации</string>
     <string name="KvalificationShortest">Ква-ции</string>
-    <string name="Kvalification">Квалификация:</string>
+    <string name="Kvalification">Квалификация</string>
+    <string name="KvalificationHint">Квалификация:</string>
     <string name="Expirience">Опыт:</string>
     <string name="Changes">Смена</string>
     <string name="Department">Типы врачей</string>
@@ -42,4 +43,5 @@
     <string name="InsertChange">Добавление смены</string>
     <string name="InsertDepartmentDoctor">Добавление подраздления врача</string>
     <string name="InsertDiagnose">Добавление диагноза</string>
+    <string name="InsertKvalification">Добавление квалификации</string>
 </resources>
