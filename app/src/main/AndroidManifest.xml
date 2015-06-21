@@ -72,6 +72,9 @@
         <activity
             android:name="com.example.gleb.insert.InsertDiagnose">
         </activity>
+        <activity
+            android:name="com.example.gleb.insert.InsertDoctor">
+        </activity>
     </application>
 
 </manifest>
