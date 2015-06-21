@@ -75,6 +75,9 @@
         <activity
             android:name="com.example.gleb.insert.InsertDoctor">
         </activity>
+        <activity
+            android:name="com.example.gleb.insert.InsertKvalification">
+        </activity>
     </application>
 
 </manifest>
