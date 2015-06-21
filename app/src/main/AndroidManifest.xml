@@ -81,6 +81,9 @@
         <activity
             android:name="com.example.gleb.insert.InsertParticient">
         </activity>
+        <activity
+            android:name="com.example.gleb.insert.InsertPost">
+        </activity>
     </application>
 
 </manifest>
