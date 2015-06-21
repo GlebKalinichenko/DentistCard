@@ -9,6 +9,7 @@
     <string name="Country">Страна:</string>
     <string name="Posts"> Должности</string>
     <string name="Post">Должность</string>
+    <string name="PostHint">Должность:</string>
     <string name="Kvalifications">Квалификации</string>
     <string name="KvalificationShortest">Ква-ции</string>
     <string name="Kvalification">Квалификация</string>
@@ -45,6 +46,7 @@
     <string name="InsertDiagnose">Добавление диагноза</string>
     <string name="InsertKvalification">Добавление квалификации</string>
     <string name="InsertParticient">Добавление пациента</string>
+    <string name="InsertPost">Добавление должности</string>
     <string name="Address">Адресс:</string>
     <string name="PhoneNumber">Телефон:</string>
     <string name="DateBorn">Дата рождения:</string>
