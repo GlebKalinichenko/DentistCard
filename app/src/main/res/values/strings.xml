@@ -34,6 +34,7 @@
     <string name="Registration">Р-ция</string>
     <string name="RegistrationFull">Регистрация</string>
     <string name="Ticket">Билеты</string>
+    <string name="TicketHint">Билет:</string>
     <string name="Recommendation">Р-ции</string>
     <string name="RecommedationFull">Рекомендации</string>
     <string name="Insert">Добавить</string>
@@ -47,8 +48,13 @@
     <string name="InsertKvalification">Добавление квалификации</string>
     <string name="InsertParticient">Добавление пациента</string>
     <string name="InsertPost">Добавление должности</string>
+    <string name="InsertRecommendation">Добавление рекомендации</string>
     <string name="Address">Адресс:</string>
     <string name="PhoneNumber">Телефон:</string>
     <string name="DateBorn">Дата рождения:</string>
     <string name="FioParent">ФИО родителей:</string>
+    <string name="Therapy">Лечение:</string>
+    <string name="Complaints">Жалобы:</string>
+    <string name="ObjectiveValues">Объективные данные:</string>
+    <string name="HistoryIllness">История заболевания:</string>
 </resources>
