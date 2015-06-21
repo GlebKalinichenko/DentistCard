@@ -44,4 +44,9 @@
     <string name="InsertDepartmentDoctor">Добавление подраздления врача</string>
     <string name="InsertDiagnose">Добавление диагноза</string>
     <string name="InsertKvalification">Добавление квалификации</string>
+    <string name="InsertParticient">Добавление пациента</string>
+    <string name="Address">Адресс:</string>
+    <string name="PhoneNumber">Телефон:</string>
+    <string name="DateBorn">Дата рождения:</string>
+    <string name="FioParent">ФИО родителей:</string>
 </resources>
