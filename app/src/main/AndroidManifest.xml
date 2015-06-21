@@ -84,6 +84,9 @@
         <activity
             android:name="com.example.gleb.insert.InsertPost">
         </activity>
+        <activity
+            android:name="com.example.gleb.insert.InsertRecommendation">
+        </activity>
     </application>
 
 </manifest>
