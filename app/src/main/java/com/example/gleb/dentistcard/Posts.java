@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.gleb.adapters.PostAdapter;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +19,8 @@ import org.json.JSONObject;
 public class Posts extends Pattern {
     public static final String TAG = "TAG";
     private DatabaseRequest request = new DatabaseRequest();
+    public String[] arrayPosts = null;
+    public int[] arrayIdPosts = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +40,6 @@ public class Posts extends Pattern {
             //String with JSON
             String jsonContent = request.makeRequest("http://dentists.16mb.com/SelectQuery/PostScript.php");
             //Fields of table Posts
-            String[] arrayPosts = null;
-            int[] arrayIdPosts = null;
 
             Log.d(TAG, jsonContent);
             try {
@@ -65,12 +67,8 @@ public class Posts extends Pattern {
 
         @Override
         protected void onPostExecute(String[] value) {
-            /*for (int i = 0; i < value.length; i++){
-                textView.append(value[i]);
-            }*/
-
-            adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, value);
-            //adapter = new CountryAdapter(getApplicationContext(), R.layout.countries_item_row, value);
+            //adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, value);
+            adapter = new PostAdapter(getBaseContext(), arrayPosts);
             listView.setAdapter(adapter);
 
         }
