@@ -8,8 +8,11 @@
     <string name="Countries">Страны</string>
     <string name="Country">Страна:</string>
     <string name="Posts"> Должности</string>
+    <string name="Post">Должность</string>
     <string name="Kvalifications">Квалификации</string>
     <string name="KvalificationShortest">Ква-ции</string>
+    <string name="Kvalification">Квалификация:</string>
+    <string name="Expirience">Опыт:</string>
     <string name="Changes">Смена</string>
     <string name="Department">Типы врачей</string>
     <string name="DepartmentDoctor">Тип врача:</string>
@@ -18,6 +21,7 @@
     <string name="TimetablesShortest">Рас-ние</string>
     <string name="DateWork">Дата работы</string>
     <string name="DoctorKod">Врач</string>
+    <string name="FIO">ФИО:</string>
     <string name="ChangeKod">Смена</string>
     <string name="Change">Смена:</string>
     <string name="Particients">Пациенты</string>
@@ -32,6 +36,7 @@
     <string name="RecommedationFull">Рекомендации</string>
     <string name="Insert">Добавить</string>
     <string name="Send">Отправлено</string>
+    <string name="PostShortest">Д-жность</string>
     <string name="InsertCountry">Добавление страны</string>
     <string name="InsertCity">Добавление города</string>
     <string name="InsertChange">Добавление смены</string>
