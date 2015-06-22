@@ -87,6 +87,15 @@
         <activity
             android:name="com.example.gleb.insert.InsertRecommendation">
         </activity>
+        <activity
+            android:name="com.example.gleb.insert.InsertRegistration">
+        </activity>
+        <activity
+            android:name="com.example.gleb.insert.InsertTicket">
+        </activity>
+        <activity
+            android:name="com.example.gleb.insert.InsertTimetable">
+        </activity>
     </application>
 
 </manifest>
