@@ -49,6 +49,8 @@
     <string name="InsertParticient">Добавление пациента</string>
     <string name="InsertPost">Добавление должности</string>
     <string name="InsertRecommendation">Добавление рекомендации</string>
+    <string name="InsertRegistration">Добавленение регистрации</string>
+    <string name="InsertTicket">Добавление талончика</string>
     <string name="Address">Адресс:</string>
     <string name="PhoneNumber">Телефон:</string>
     <string name="DateBorn">Дата рождения:</string>
@@ -57,4 +59,9 @@
     <string name="Complaints">Жалобы:</string>
     <string name="ObjectiveValues">Объективные данные:</string>
     <string name="HistoryIllness">История заболевания:</string>
+    <string name="DateRegistration">Дата регистрации:</string>
+    <string name="Particient">Пациент:</string>
+    <string name="DoctorHint">Врач:</string>
+    <string name="DateReception">Дата приема:</string>
+    <string name="DateWorkHint">Рабочее время:</string>
 </resources>
