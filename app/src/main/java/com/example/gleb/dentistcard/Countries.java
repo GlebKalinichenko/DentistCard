@@ -5,19 +5,38 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.gleb.adapters.CountryAdapter;
 import com.example.gleb.insert.InsertCountry;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 
 /**
  * Created by Gleb on 05.06.2015.
@@ -26,6 +45,11 @@ public class Countries extends Pattern {
     public static final String TAG = "TAG";
     private DatabaseRequest request = new DatabaseRequest();
     public CountryAdapter adapter;
+    public ImageButton imageButton;
+    public EditText oldCountryEditText;
+    public EditText newCountryEditText;
+    public String[] arrayCountry = null;
+    public int[] arrayIdCountry = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +72,98 @@ public class Countries extends Pattern {
                 builder.setView(dialogView);
                 AlertDialog dialog = builder.create();
                 dialog.show();
+                oldCountryEditText = (EditText) dialog.findViewById(R.id.oldCountryEditText);
+                Log.d(TAG, arrayCountry[position - 1]);
+                oldCountryEditText.append(arrayCountry[position - 1]);
+                newCountryEditText = (EditText) dialog.findViewById(R.id.newCountryEditText);
+                imageButton = (ImageButton) dialog.findViewById(R.id.updateImageButton);
+                imageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d(TAG, "Click");
+                        new Updater().execute();
+                    }
+                });
             }
         });
 
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listView.setMultiChoiceModeListener(new MultiChoice(listView));
+
+
+    }
+
+    /**
+     * MultiChoice for delete record and add new record in table Countries
+     */
+    public class MultiChoice implements AbsListView.MultiChoiceModeListener{
+        private AbsListView list;
+        public ArrayList<Integer> positions = new ArrayList<Integer>();
+
+        public MultiChoice(AbsListView list) {
+            this.list = list;
+        }
+
+        @Override
+        public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+            Log.d(TAG, "OnItemCheck");
+            if (checked) {
+                int rows = list.getCheckedItemCount();
+                positions.add(position);
+                //Log.d(TAG, String.valueOf(rows));
+                setSubtitle(mode, rows);
+            }
+        }
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.context_menu, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            if (item.getItemId() == R.id.item_add){
+                Log.d(TAG, "Item add");
+                Intent intent = new Intent(getBaseContext(), InsertCountry.class);
+                startActivity(intent);
+            }
+            else{
+                if (item.getItemId() == R.id.item_delete){
+                    for (int i = 0; i < positions.size(); i++){
+                        Log.d(TAG, arrayCountry[positions.get(i) - 1]);
+                        new Deleter(positions.get(i) - 1).execute();
+
+                    }
+
+                    //new Deleter(rows).execute();
+                    //Log.d(TAG, String.valueOf(rows));
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+
+        }
+
+        private void setSubtitle(ActionMode mode, int selectedCount) {
+            switch (selectedCount) {
+                case 0:
+                    mode.setSubtitle(null);
+                    break;
+                default:
+                    mode.setTitle(String.valueOf(selectedCount));
+                    break;
+            }
+        }
     }
 
     /**
@@ -63,8 +176,6 @@ public class Countries extends Pattern {
             //String with JSON
             String jsonContent = request.makeRequest("http://dentists.16mb.com/SelectQuery/CountryScript.php");
             //Fields of table Countries
-            String[] arrayCountry = null;
-            int[] arrayIdCountry = null;
 
             Log.d(TAG, jsonContent);
             try {
@@ -100,6 +211,97 @@ public class Countries extends Pattern {
             adapter = new CountryAdapter(getBaseContext(), value);
             listView.setAdapter(adapter);
 
+        }
+    }
+
+    /**
+     * Update record from table Countries
+     */
+    public class Updater extends AsyncTask<String, String, String>{
+
+        @Override
+        protected String doInBackground(String... params) {
+            String oldCountry = oldCountryEditText.getText().toString();
+            String newCountry = newCountryEditText.getText().toString();
+            Log.d(TAG, oldCountry);
+
+            client = new DefaultHttpClient();
+            post = new HttpPost("http://dentists.16mb.com/UpdateScript/UpdateCountryScript.php");
+            HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); // Timeout
+            HttpResponse response;
+            JSONObject json = new JSONObject();
+
+            try {
+                json.put("oldCountry", oldCountry);
+                json.put("newCountry", newCountry);
+                post.setHeader("json", json.toString());
+                StringEntity se = new StringEntity(json.toString());
+                se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+                post.setEntity(se);
+                response = client.execute(post);
+
+                if (response != null) {
+                    InputStream in = response.getEntity().getContent(); // Get the
+                    Log.i("Read from Server", in.toString());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Toast.makeText(getBaseContext(), R.string.Send, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Delete record from table Countries
+     */
+    public class Deleter extends AsyncTask<String, String, String>{
+        private int positionCountry;
+
+        public Deleter(int positionCountry) {
+            this.positionCountry = positionCountry;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String country = arrayCountry[positionCountry];
+            Log.d(TAG, country);
+
+            client = new DefaultHttpClient();
+            post = new HttpPost("http://dentists.16mb.com/DeleteScript/DeleteCountryScript.php");
+            HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); // Timeout
+            HttpResponse response;
+            JSONObject json = new JSONObject();
+
+            try {
+                json.put("countryPosition", country);
+                post.setHeader("json", json.toString());
+                StringEntity se = new StringEntity(json.toString());
+                se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+                post.setEntity(se);
+                response = client.execute(post);
+
+                if (response != null) {
+                    InputStream in = response.getEntity().getContent(); // Get the
+                    Log.i("Read from Server", in.toString());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Toast.makeText(getBaseContext(), R.string.Send, Toast.LENGTH_SHORT).show();
         }
     }
 
