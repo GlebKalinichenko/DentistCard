@@ -5,8 +5,12 @@
     <string name="action_settings">Settings</string>
     <string name="Cities">Города</string>
     <string name="City">Город:</string>
+    <string name="OldCity">Текущий город</string>
+    <string name="NewCity">Новый город</string>
     <string name="Countries">Страны</string>
     <string name="Country">Страна:</string>
+    <string name="OldCountry">Текущий страна</string>
+    <string name="NewCountry">Новая страна</string>
     <string name="Posts"> Должности</string>
     <string name="Post">Должность</string>
     <string name="PostHint">Должность:</string>
@@ -16,8 +20,12 @@
     <string name="KvalificationHint">Квалификация:</string>
     <string name="Expirience">Опыт:</string>
     <string name="Changes">Смена</string>
+    <string name="OldChange">Текущая смена</string>
+    <string name="NewChange">Новая смена</string>
     <string name="Department">Типы врачей</string>
     <string name="DepartmentDoctor">Тип врача:</string>
+    <string name="OldDepartmentDoctor">Текущий тип врача</string>
+    <string name="NewDepartmentDoctor">Новый тип врача</string>
     <string name="Doctors">Врачи</string>
     <string name="Timetables">Расписание работы</string>
     <string name="TimetablesShortest">Рас-ние</string>
@@ -51,6 +59,10 @@
     <string name="InsertRecommendation">Добавление рекомендации</string>
     <string name="InsertRegistration">Добавленение регистрации</string>
     <string name="InsertTicket">Добавление талончика</string>
+    <string name="UpdateCountry">Обновление стран</string>
+    <string name="UpdateCity">Обновление городов</string>
+    <string name="UpdateChange">Обновление смен</string>
+    <string name="UpdateDepartmentDoctors">Обновление типов врачей</string>
     <string name="Address">Адресс:</string>
     <string name="PhoneNumber">Телефон:</string>
     <string name="DateBorn">Дата рождения:</string>
