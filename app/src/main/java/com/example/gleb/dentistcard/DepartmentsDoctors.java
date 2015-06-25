@@ -205,7 +205,7 @@ public class DepartmentsDoctors extends Pattern {
         }
     }
 
-        /**
+    /**
      * Delete record from table departments
      */
     public class Deleter extends AsyncTask<String, String, String>{
