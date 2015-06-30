@@ -16,15 +16,15 @@ import com.example.gleb.dentistcard.R;
 public class TicketAdapter extends ArrayAdapter<String> {
     public static final String TAG = "TAG";
     public Context context;
-    public int[] arrayDoctorKod;
-    public int[] arrayRegistrationKod;
+    public String[] arrayDoctorKod;
+    public String[] arrayRegistrationKod;
     public String[] arrayDateReception;
     private LayoutInflater mInflater;
     public TextView doctorKodTextView;
     public TextView registrationKodTextView;
     public TextView dateReceptionTextView;
 
-    public TicketAdapter(Context context, int[] arrayDoctorKod, int[] arrayRegistrationKod, String[] arrayDateReception) {
+    public TicketAdapter(Context context, String[] arrayDoctorKod, String[] arrayRegistrationKod, String[] arrayDateReception) {
         super(context, R.layout.ticket_item_row, arrayDateReception);
         this.context = context;
         this.arrayDoctorKod = arrayDoctorKod;
