@@ -57,7 +57,7 @@ public class Cities extends Pattern {
     public EditText newCityEditText;
     public String[] arrayCity = null;
     public int[] arrayIdCity = null;
-    public int[] arrayCountryKod = null;
+    public String[] arrayCountryKod = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +81,7 @@ public class Cities extends Pattern {
                 AlertDialog dialog = builder.create();
                 dialog.show();
                 oldCountryKodEditText = (EditText) dialog.findViewById(R.id.oldCountryKodEditText);
-                oldCountryKodEditText.append(String.valueOf(arrayCountryKod[position - 1]));
+                oldCountryKodEditText.append(arrayCountryKod[position - 1]);
                 newCountryKodEditText = (EditText) dialog.findViewById(R.id.newCountryKodEditText);
 
                 oldCityEditText = (EditText) dialog.findViewById(R.id.oldCityEditText);
@@ -302,21 +302,23 @@ public class Cities extends Pattern {
 
         @Override
         protected String[] doInBackground(String... params) {
-            String jsonContent = request.makeRequest("http://dentists.16mb.com/SelectQuery/CityScript.php");;
+            String jsonContent = request.makeRequest("http://dentists.16mb.com/SelectLookupQuery/SelectCityLookup.php");
 
             Log.d(TAG, jsonContent);
             try {
                 JSONArray array = new JSONArray(jsonContent);
                 arrayCity = new String[array.length()];
                 arrayIdCity = new int[array.length()];
-                arrayCountryKod = new int[array.length()];
+                arrayCountryKod = new String[array.length()];
 
                 for (int i = 0; i < array.length(); i++){
                     JSONObject jObject = array.getJSONObject(i);
-                    int id = jObject.getInt("IdCity");
-                    int countryKod = jObject.getInt("CountryKod");
+//                    int id = jObject.getInt("IdCity");
+//                    int countryKod = jObject.getInt("CountryKod");
+//                    String city = jObject.getString("City");
+                    String countryKod = jObject.getString("Country");
                     String city = jObject.getString("City");
-                    arrayIdCity[i] = id;
+                    //arrayIdCity[i] = id;
                     arrayCountryKod[i] = countryKod;
                     arrayCity[i] = city;
                     Log.d(TAG, arrayCity[i]);
