@@ -17,13 +17,13 @@ import com.example.gleb.dentistcard.R;
 public class CityAdapter extends ArrayAdapter<String> {
     public Context context;
     public String[] cities;
-    public int[] countryKod;
+    public String[] countryKod;
     public static final String TAG = "TAG";
     private LayoutInflater mInflater;
     public TextView countryKodTextView;
     public TextView cityTextView;
 
-    public CityAdapter(Context context, String[] cities, int[] countryKod) {
+    public CityAdapter(Context context, String[] cities, String[] countryKod) {
         super(context, R.layout.cities_item_row, cities);
         this.context = context;
         this.cities = cities;
@@ -34,7 +34,7 @@ public class CityAdapter extends ArrayAdapter<String> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view;  // создаем itemView из заданного layout
+        View view;
         if (convertView == null) {
             view = mInflater.inflate(R.layout.cities_item_row, parent, false);
         } else {
