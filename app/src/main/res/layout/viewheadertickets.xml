@@ -1,21 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <TextView android:id="@+id/txtHeader"
+
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center_vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:textStyle="bold"
-        android:textSize="22dp"
-        android:textColor="#FFFFFF"
-        android:padding="10dp"
-        android:text="@string/Ticket"
-        android:background="#336699" />
+        android:layout_height="wrap_content">
+
+        <TextView android:id="@+id/txtHeader"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:textStyle="bold"
+            android:textSize="22dp"
+            android:textColor="#FFFFFF"
+            android:padding="10dp"
+            android:text="@string/Ticket"
+            android:background="#336699" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#336699">
+
+        <TextView android:id="@+id/FIODateWorkTextView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="left|center"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:text="@string/DoctorFIOHeader"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+
+        <TextView android:id="@+id/headerDateWorkTextView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:text="@string/DateRegistrationHeader"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+
+        <TextView android:id="@+id/headerChangeKodTextView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="right|center"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:text="@string/DateReceptionHeader"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp" />
+
+    </LinearLayout>
 
 </LinearLayout>
