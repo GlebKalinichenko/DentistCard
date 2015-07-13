@@ -1,57 +1,99 @@
 package com.example.gleb.adapters;
 
-import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.gleb.dentistcard.R;
+import com.example.gleb.tables.Ticket;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by Gleb on 13.06.2015.
+ * Created by gleb on 08.07.15.
  */
-public class TicketAdapter extends ArrayAdapter<String> {
+public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketViewHolder> {
     public static final String TAG = "TAG";
-    public Context context;
-    public String[] arrayDoctorKod;
-    public String[] arrayRegistrationKod;
-    public String[] arrayDateReception;
-    private LayoutInflater mInflater;
-    public TextView doctorKodTextView;
-    public TextView registrationKodTextView;
-    public TextView dateReceptionTextView;
+    private SparseBooleanArray selectedItems;
+    List<Ticket> tickets;
 
-    public TicketAdapter(Context context, String[] arrayDoctorKod, String[] arrayRegistrationKod, String[] arrayDateReception) {
-        super(context, R.layout.ticket_item_row, arrayDateReception);
-        this.context = context;
-        this.arrayDoctorKod = arrayDoctorKod;
-        this.arrayRegistrationKod = arrayRegistrationKod;
-        this.arrayDateReception = arrayDateReception;
-        this.mInflater = LayoutInflater.from(context);
-        Log.d(TAG, arrayDateReception[0]);
+    public static class TicketViewHolder extends RecyclerView.ViewHolder {
+        TextView doctorKodTextView;
+        TextView registrationKodTextView;
+        TextView dateReceptionTextView;
 
+        TicketViewHolder(View itemView) {
+            super(itemView);
+            doctorKodTextView = (TextView)itemView.findViewById(R.id.doctorKod);
+            registrationKodTextView = (TextView)itemView.findViewById(R.id.registrationKod);
+            dateReceptionTextView = (TextView)itemView.findViewById(R.id.dateReception);
+        }
     }
 
+    public TicketAdapter(List<Ticket> tickets){
+        this.tickets = tickets;
+    }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View view;
-        if (convertView == null) {
-            view = mInflater.inflate(R.layout.ticket_item_row, parent, false);
-        } else {
-            view = convertView;
-        }
-
-        doctorKodTextView = (TextView) view.findViewById(R.id.doctorKodTextView);
-        registrationKodTextView = (TextView) view.findViewById(R.id.registrationKodTextView);
-        dateReceptionTextView = (TextView) view.findViewById(R.id.dateReceptionTextView);
-        doctorKodTextView.setText(String.valueOf(arrayDoctorKod[position]));
-        registrationKodTextView.setText(String.valueOf(arrayRegistrationKod[position]));
-        dateReceptionTextView.setText(arrayDateReception[position]);
-
-        return view;
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
+
+    @Override
+    public TicketViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_ticket, viewGroup, false);
+        TicketViewHolder pvh = new TicketViewHolder(v);
+        return pvh;
+    }
+
+    @Override
+    public void onBindViewHolder(TicketViewHolder ticketViewHolder, int i) {
+        Log.d(TAG, "TicketAdapter " + tickets.get(i).registrationKod);
+        ticketViewHolder.doctorKodTextView.setText("Врач " + tickets.get(i).doctorKod);
+        ticketViewHolder.registrationKodTextView.setText("Дата регистрации " + tickets.get(i).registrationKod.toString());
+        ticketViewHolder.dateReceptionTextView.setText("Прием " + tickets.get(i).dateReception);
+    }
+
+    public void removeData(int position) {
+        tickets.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    @Override
+    public int getItemCount() {
+        return tickets.size();
+    }
+
+    public void toggleSelection(int pos) {
+        if (selectedItems.get(pos, false)) {
+            selectedItems.delete(pos);
+        }
+        else {
+            selectedItems.put(pos, true);
+        }
+        notifyItemChanged(pos);
+    }
+
+    public void clearSelections() {
+        selectedItems.clear();
+        notifyDataSetChanged();
+    }
+
+    public int getSelectedItemCount() {
+        return selectedItems.size();
+    }
+
+    public List<Integer> getSelectedItems() {
+        List<Integer> items = new ArrayList<Integer>(selectedItems.size());
+        for (int i = 0; i < selectedItems.size(); i++) {
+            items.add(selectedItems.keyAt(i));
+        }
+        return items;
+    }
+
 }
