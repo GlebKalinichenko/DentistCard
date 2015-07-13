@@ -45,7 +45,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + META_TABLE_KVALIFICATIONS.TABLE_KVALIFICAIONS + " (" + META_TABLE_KVALIFICATIONS._ID + " INT PRIMARY KEY AUTOINCREMENT, " +
             META_TABLE_KVALIFICATIONS.kvalifications + " TEXT NOT NULL);");
 
-        //create table changes
+        //create table changeactivity
         db.execSQL("CREATE TABLE " + META_TABLE_CHANGE.TABLE_CHANGES + " (" + META_TABLE_CHANGE._ID + " INT PRIMARY KEY AUTOINCREMENT, " +
             META_TABLE_CHANGE.numChange + " INT NOT NULL, " + META_TABLE_CHANGE.timeChange + " TEXT NOT NULL);");
 
@@ -143,7 +143,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Timetables of doctors to show when they work
+     * TimetablesActivity of doctors to show when they work
      */
     public static class META_TABLE_TIMETABLES_DOCTORS implements BaseColumns{
         public static final String TABLE_TIMETABLES = "timetables";
@@ -152,10 +152,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Work changes of doctors 1 or 2
+     * Work changeactivity of doctors 1 or 2
      */
     public static class META_TABLE_CHANGE implements BaseColumns{
-        public static final String TABLE_CHANGES = "changes";
+        public static final String TABLE_CHANGES = "changeactivity";
         public static int numChange;
         public static int timeChange;
     }
