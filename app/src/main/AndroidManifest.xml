@@ -103,5 +103,4 @@
             android:name=".TimetableActivity">
         </activity>
     </application>
-
 </manifest>

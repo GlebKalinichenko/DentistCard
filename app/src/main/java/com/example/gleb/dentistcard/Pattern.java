@@ -17,7 +17,7 @@ import org.apache.http.client.methods.HttpPost;
 /**
  * Created by Gleb on 05.06.2015.
  */
-abstract class Pattern extends ActionBarActivity {
+public abstract class Pattern extends ActionBarActivity {
     protected ListView listView;
     protected ArrayAdapter<String> adapter;
     protected HttpClient client;
