@@ -153,7 +153,7 @@ public class Navigator extends ActionBarActivity {
         recommendationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), RecycleView.class);
+                Intent intent = new Intent(getBaseContext(), RecomendationActivity.class);
                 startActivity(intent);
             }
         });
