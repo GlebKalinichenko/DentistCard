@@ -19,7 +19,7 @@
     <string name="Kvalification">Квалификация</string>
     <string name="KvalificationHint">Квалификация:</string>
     <string name="Expirience">Опыт:</string>
-    <string name="Changes">Смена</string>
+    <string name="Changes">Смены</string>
     <string name="OldChange">Текущая смена</string>
     <string name="NewChange">Новая смена</string>
     <string name="Department">Типы врачей</string>
@@ -43,10 +43,11 @@
     <string name="NewDiagnose">Новый диагноз</string>
     <string name="Registration">Р-ция</string>
     <string name="RegistrationFull">Регистрация</string>
+    <string name="Registrations">Регистрации</string>
     <string name="Ticket">Билеты</string>
     <string name="TicketHint">Билет:</string>
     <string name="Recommendation">Р-ции</string>
-    <string name="RecommedationFull">Рекомендации</string>
+    <string name="RecommendationFull">Рекомендации</string>
     <string name="Insert">Добавить</string>
     <string name="Send">Отправлено</string>
     <string name="PostShortest">Д-жность</string>
@@ -71,7 +72,9 @@
     <string name="UpdateParticient">Обновление пациентов</string>
     <string name="UpdatePost">Обновнение должностей</string>
     <string name="UpdateRegistration">Обновление регистрации</string>
+    <string name="UpdateRecomendation">Обновление рекомендации</string>
     <string name="UpdateTicket">Обновление билетов</string>
+    <string name="UpdateTimetable">Обновление расписания</string>
     <string name="Address">Адресс:</string>
     <string name="PhoneNumber">Телефон:</string>
     <string name="DateBorn">Дата рождения:</string>
@@ -135,4 +138,14 @@
     <string name="SignIn">Sign In</string>
     <string name="Profile">Profile</string>
     <string name="CorrectRegistration">Не все поля введены, укажите все не заполненые поля</string>
+    <string name="drawer_item_home">Home</string>
+    <string name="drawer_item_free_play">Free Play</string>
+    <string name="drawer_item_custom">Custom</string>
+    <string name="drawer_item_settings">Settings</string>
+    <string name="drawer_item_help">Help</string>
+    <string name="drawer_item_open_source">Open Source</string>
+    <string name="drawer_item_contact">Contact</string>
+    <string name="action_remove">Remove</string>
+    <string name="selected_count">%1$s selected</string>
+    <string name="hintCountry">Укажите страну</string>
 </resources>
