@@ -1,52 +1,93 @@
 package com.example.gleb.adapters;
 
-import android.content.Context;
-import android.util.Log;
+import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.gleb.dentistcard.R;
+import com.example.gleb.tables.City;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by Gleb on 06.06.2015.
+ * Created by gleb on 05.07.15.
  */
-public class CityAdapter extends ArrayAdapter<String> {
-    public Context context;
-    public String[] cities;
-    public String[] countryKod;
-    public static final String TAG = "TAG";
-    private LayoutInflater mInflater;
-    public TextView countryKodTextView;
-    public TextView cityTextView;
+public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder>{
+    private SparseBooleanArray selectedItems;
+    List<City> cities;
 
-    public CityAdapter(Context context, String[] cities, String[] countryKod) {
-        super(context, R.layout.cities_item_row, cities);
-        this.context = context;
+    public static class CityViewHolder extends RecyclerView.ViewHolder {
+        TextView countryKodTextView;
+        TextView cityTextView;
+
+        CityViewHolder(View itemView) {
+            super(itemView);
+            countryKodTextView = (TextView)itemView.findViewById(R.id.countryKod);
+            cityTextView = (TextView)itemView.findViewById(R.id.city);
+        }
+    }
+
+    public CityAdapter(List<City> cities){
         this.cities = cities;
-        this.countryKod = countryKod;
-        this.mInflater = LayoutInflater.from(context);
-        Log.d(TAG, "Adapter " + String.valueOf(countryKod[0]));
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View view;
-        if (convertView == null) {
-            view = mInflater.inflate(R.layout.cities_item_row, parent, false);
-        } else {
-            view = convertView;
-        }
-
-        countryKodTextView = (TextView) view.findViewById(R.id.countryKodTextView);
-        cityTextView = (TextView) view.findViewById(R.id.cityTextView);
-
-        countryKodTextView.setText(String.valueOf(countryKod[position]));
-        cityTextView.setText(cities[position]);
-
-        return view;
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
+
+    @Override
+    public CityViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_city, viewGroup, false);
+        CityViewHolder pvh = new CityViewHolder(v);
+        return pvh;
+    }
+
+    @Override
+    public void onBindViewHolder(CityViewHolder CountryViewHolder, int i) {
+        CountryViewHolder.countryKodTextView.setText(cities.get(i).countryKod);
+        CountryViewHolder.cityTextView.setText(cities.get(i).city);
+    }
+
+    public void removeData(int position) {
+        cities.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    @Override
+    public int getItemCount() {
+        return cities.size();
+    }
+
+    public void toggleSelection(int pos) {
+        if (selectedItems.get(pos, false)) {
+            selectedItems.delete(pos);
+        }
+        else {
+            selectedItems.put(pos, true);
+        }
+        notifyItemChanged(pos);
+    }
+
+    public void clearSelections() {
+        selectedItems.clear();
+        notifyDataSetChanged();
+    }
+
+    public int getSelectedItemCount() {
+        return selectedItems.size();
+    }
+
+    public List<Integer> getSelectedItems() {
+        List<Integer> items = new ArrayList<Integer>(selectedItems.size());
+        for (int i = 0; i < selectedItems.size(); i++) {
+            items.add(selectedItems.keyAt(i));
+        }
+        return items;
+    }
+
 }
