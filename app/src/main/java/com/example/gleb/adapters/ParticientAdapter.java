@@ -1,70 +1,106 @@
 package com.example.gleb.adapters;
 
-import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.gleb.dentistcard.R;
+import com.example.gleb.tables.Particient;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by Gleb on 07.06.2015.
+ * Created by gleb on 12.07.15.
  */
-public class ParticientAdapter extends ArrayAdapter<String> {
+public class ParticientAdapter extends RecyclerView.Adapter<ParticientAdapter.ParticientViewHolder> {
     public static final String TAG = "TAG";
-    private Context context;
-    private String[] arrayFIO;
-    private String[] arrayAddress;
-    private int[] arrayCityKod;
-    private String[] arrayPhoneNumber;
-    private String[] arrayFIOParent;
-    private String[] arrayDateBorn;
-    private LayoutInflater mInflater;
-    public TextView FIOTextView;
-    public TextView addressTextView;
-    public TextView cityKodTextView;
-    public TextView phoneNumberTextView;
-    public TextView FIOParentTextView;
-    public TextView DateBornTextView;
+    private SparseBooleanArray selectedItems;
+    List<Particient> particients;
 
-    public ParticientAdapter(Context context, String[] arrayFIO, String[] arrayAddress, int[] arrayCityKod, String[] arrayPhoneNumber,
-        String[] arrayFIOParent, String[] arrayDateBorn) {
-        super(context, R.layout.particient_item_row, arrayFIO);
-        this.context = context;
-        this.arrayFIO = arrayFIO;
-        this.arrayAddress = arrayAddress;
-        this.arrayCityKod = arrayCityKod;
-        this.arrayPhoneNumber = arrayPhoneNumber;
-        this.arrayFIOParent = arrayFIOParent;
-        this.arrayDateBorn = arrayDateBorn;
-        this.mInflater = LayoutInflater.from(context);
+    public static class ParticientViewHolder extends RecyclerView.ViewHolder {
+        TextView FIOTextView;
+        TextView addressTextView;
+        TextView cityKodTextView;
+        TextView phoneNumberTextView;
+        TextView dateBornTextView;
+        TextView fioParentTextView;
+
+        ParticientViewHolder(View itemView) {
+            super(itemView);
+            FIOTextView = (TextView)itemView.findViewById(R.id.FIO);
+            addressTextView = (TextView)itemView.findViewById(R.id.address);
+            cityKodTextView = (TextView)itemView.findViewById(R.id.cityKod);
+            phoneNumberTextView = (TextView)itemView.findViewById(R.id.phoneNumber);
+            dateBornTextView = (TextView)itemView.findViewById(R.id.dateBorn);
+            fioParentTextView = (TextView)itemView.findViewById(R.id.fioParent);
+        }
+    }
+
+    public ParticientAdapter(List<Particient> particients){
+        this.particients = particients;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View view;
-        if (convertView == null) {
-            view = mInflater.inflate(R.layout.particient_item_row, parent, false);
-        } else {
-            view = convertView;
-        }
-
-        FIOTextView = (TextView) view.findViewById(R.id.FIOTextView);
-        addressTextView = (TextView) view.findViewById(R.id.addressTextView);
-        cityKodTextView = (TextView) view.findViewById(R.id.cityKodTextView);
-        phoneNumberTextView = (TextView) view.findViewById(R.id.phoneNumberTextView);
-        FIOParentTextView = (TextView) view.findViewById(R.id.FIOParentKodTextView);
-        DateBornTextView = (TextView) view.findViewById(R.id.dateBornTextView);
-
-        FIOTextView.setText(arrayFIO[position]);
-        addressTextView.setText(arrayAddress[position]);
-        cityKodTextView.setText(String.valueOf(arrayCityKod[position]));
-        phoneNumberTextView.setText(arrayPhoneNumber[position]);
-        FIOParentTextView.setText(arrayFIOParent[position]);
-        DateBornTextView.setText(arrayDateBorn[position]);
-
-        return view;
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
+
+    @Override
+    public ParticientViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_particient, viewGroup, false);
+        ParticientViewHolder pvh = new ParticientViewHolder(v);
+        return pvh;
+    }
+
+    @Override
+    public void onBindViewHolder(ParticientViewHolder particientViewHolder, int i) {
+        particientViewHolder.FIOTextView.setText(particients.get(i).FIO);
+        particientViewHolder.addressTextView.setText(particients.get(i).address);
+        particientViewHolder.cityKodTextView.setText(particients.get(i).cityKod);
+        particientViewHolder.phoneNumberTextView.setText(particients.get(i).phoneNumber);
+        particientViewHolder.dateBornTextView.setText("Дата рождения " + particients.get(i).dateBorn);
+        particientViewHolder.fioParentTextView.setText("Родитель " + particients.get(i).FIOParent);
+    }
+
+    public void removeData(int position) {
+        particients.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    @Override
+    public int getItemCount() {
+        return particients.size();
+    }
+
+    public void toggleSelection(int pos) {
+        if (selectedItems.get(pos, false)) {
+            selectedItems.delete(pos);
+        }
+        else {
+            selectedItems.put(pos, true);
+        }
+        notifyItemChanged(pos);
+    }
+
+    public void clearSelections() {
+        selectedItems.clear();
+        notifyDataSetChanged();
+    }
+
+    public int getSelectedItemCount() {
+        return selectedItems.size();
+    }
+
+    public List<Integer> getSelectedItems() {
+        List<Integer> items = new ArrayList<Integer>(selectedItems.size());
+        for (int i = 0; i < selectedItems.size(); i++) {
+            items.add(selectedItems.keyAt(i));
+        }
+        return items;
+    }
+
 }
