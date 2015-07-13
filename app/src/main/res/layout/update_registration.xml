@@ -3,19 +3,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView android:id="@+id/txtHeader"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:textStyle="bold"
-        android:textSize="22dp"
-        android:textColor="#FFFFFF"
-        android:padding="10dp"
-        android:text="@string/UpdateParticient"
-        android:background="#336699" />
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -91,16 +78,14 @@
             android:layout_gravity="center"
             android:layout_weight="1"/>
 
-        <EditText
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/newParticientKodEditText"
+            android:id="@+id/particientKodSpinner"
             android:layout_gravity="center"
             android:layout_weight="1"/>
 
     </LinearLayout>
-
-
 
     <LinearLayout
         android:orientation="horizontal"
@@ -108,11 +93,6 @@
         android:layout_height="wrap_content"
         android:gravity="center">
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_edit"
-            android:id="@+id/updateImageButton" />
     </LinearLayout>
 
 </LinearLayout>
