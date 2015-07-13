@@ -19,45 +19,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Countries">
-        </activity>
-        <activity
-            android:name=".Posts">
-        </activity>
-        <activity
-            android:name=".Kvalifications">
-        </activity>
-        <activity
-            android:name=".Changes">
-        </activity>
-        <activity
-            android:name=".DepartmentsDoctors">
-        </activity>
-        <activity
-            android:name=".Doctors">
-        </activity>
-        <activity
-            android:name=".Timetables">
-        </activity>
-        <activity
-            android:name=".Cities">
-        </activity>
-        <activity
-            android:name=".Particients">
-        </activity>
-        <activity
-            android:name=".Diagnoses">
-        </activity>
-        <activity
-            android:name=".Registrations">
-        </activity>
-        <activity
-            android:name=".Tickets">
-        </activity>
-        <activity
-            android:name=".Recommendations">
-        </activity>
-        <activity
             android:name=".Navigator">
         </activity>
         <activity
@@ -101,6 +62,45 @@
         </activity>
         <activity
             android:name="com.example.gleb.insert.InsertTimetable">
+        </activity>
+        <activity
+            android:name=".CountryActivity">
+        </activity>
+        <activity
+            android:name=".CityActivity">
+        </activity>
+        <activity
+            android:name=".DepartmentDoctorActivity">
+        </activity>
+        <activity
+            android:name=".ChangeActivity">
+        </activity>
+        <activity
+            android:name=".KvalificationActivity">
+        </activity>
+        <activity
+            android:name=".DiagnoseActivity">
+        </activity>
+        <activity
+            android:name=".PostActivity">
+        </activity>
+        <activity
+            android:name=".RegistrationActivity">
+        </activity>
+        <activity
+            android:name=".TicketActivity">
+        </activity>
+        <activity
+            android:name=".DoctorActivity">
+        </activity>
+        <activity
+            android:name=".ParticientActivity">
+        </activity>
+        <activity
+            android:name=".RecomendationActivity">
+        </activity>
+        <activity
+            android:name=".TimetableActivity">
         </activity>
     </application>
 

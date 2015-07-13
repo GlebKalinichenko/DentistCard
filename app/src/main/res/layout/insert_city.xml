@@ -24,18 +24,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/Country"
             android:id="@+id/countryKodTextView"
             android:layout_margin="15dp"
             android:textSize="20dp"/>
 
-        <EditText
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/countrySpinner"
+            android:background="@drawable/insert_edittext"
             android:layout_margin="15dp"
-            android:id="@+id/countryKodEditText"
-            android:layout_gravity="center"
-            android:background="@drawable/insert_edittext"/>
+            android:gravity="center"/>
 
     </LinearLayout>
 
@@ -47,6 +48,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/City"
             android:id="@+id/cityTextView"
             android:layout_margin="15dp"
@@ -60,6 +62,7 @@
             android:layout_gravity="center"
             android:background="@drawable/insert_edittext"/>
     </LinearLayout>
+
 
     <Button
         android:layout_width="wrap_content"

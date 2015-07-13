@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:colorAccent">
 
     <TextView android:id="@+id/txtHeader"
         android:layout_width="fill_parent"
@@ -10,24 +13,44 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:textStyle="bold"
-        android:textSize="22dp"
         android:textColor="#FFFFFF"
         android:padding="10dp"
         android:text="@string/InsertCountry"
-        android:background="#336699" />
+        android:textSize="30sp"/>
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:id="@+id/countryEditText"
-        android:layout_gravity="center"
-        android:background="@drawable/insert_edittext"/>
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:paddingLeft="72dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp">
 
-    <Button
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/countryEditText"
+            android:hint="@string/Countries"
+            android:text="@string/hintCountry"
+            android:textCursorDrawable="@drawable/text_cursor_cyan"
+            android:textSize="34sp"
+            app:met_baseColor="@android:color/white"
+            app:met_floatingLabel="highlight"
+            app:met_maxCharacters="20"
+            app:met_primaryColor="?colorAccent"
+            app:met_singleLineEllipsis="true" />
+
+    </LinearLayout>
+
+    <com.xgc1986.ripplebutton.widget.RippleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Insert"
         android:id="@+id/insertCountryButton"
-        android:layout_gravity="center"/>
+        android:text="@string/Insert"
+        android:layout_gravity="center"
+        android:background="#1E88E5"
+        app:rippleColor="@android:color/white"/>
+
+
 </LinearLayout>
