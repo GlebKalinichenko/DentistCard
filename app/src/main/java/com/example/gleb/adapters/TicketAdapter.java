@@ -55,7 +55,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketView
     public void onBindViewHolder(TicketViewHolder ticketViewHolder, int i) {
         Log.d(TAG, "TicketAdapter " + tickets.get(i).registrationKod);
         ticketViewHolder.doctorKodTextView.setText("Врач " + tickets.get(i).doctorKod);
-        ticketViewHolder.registrationKodTextView.setText("Дата регистрации " + tickets.get(i).registrationKod.toString());
+        ticketViewHolder.registrationKodTextView.setText("Пациент  " + tickets.get(i).registrationKod.toString());
         ticketViewHolder.dateReceptionTextView.setText("Прием " + tickets.get(i).dateReception);
     }
 
