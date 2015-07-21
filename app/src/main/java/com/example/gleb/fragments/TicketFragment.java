@@ -41,7 +41,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,14 +85,6 @@ public class TicketFragment extends Fragment {
     protected HttpPost post;
 
     private String fullName;
-
-    public TicketFragment() {
-    }
-
-    public TicketFragment(String fullName) {
-        this.fullName = fullName;
-        Log.d(TAG, "TicketFragment " + fullName);
-    }
 
     @Nullable
     @Override
@@ -206,7 +200,7 @@ public class TicketFragment extends Fragment {
         @Override
         protected String[] doInBackground(String... params) {
             //String with JSON
-            String jsonContent = request.makeRequest("http://dentists.16mb.com/SelectLookupQuery/DoctorProfileLookup.php");
+            String jsonContent = request.makeRequest("http://dentists.16mb.com/SelectLookupQuery/SelectTicketLookup.php");
             //Fields of table tickets
 
             Log.d(TAG, jsonContent);
