@@ -3,6 +3,7 @@ package com.example.gleb.dentistcard;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,7 +13,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.gleb.adapters.CityAdapter;
+import com.example.gleb.profileactivities.AdminProfileActivity;
+import com.example.gleb.profileactivities.DoctorProfileActivity;
+import com.example.gleb.profileactivities.ParticientProfileActivity;
+import com.example.gleb.profileactivities.RegistrationProfileActivity;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -25,7 +29,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * Created by gleb on 28.06.15.
@@ -44,7 +50,13 @@ public class RegistrationUser extends Pattern{
     public String[] arrayPassword = null;
     public String[] arrayProfiles = null;
     public int[] arrayProfileKod = null;
-    public Spinner spinner;
+    public Spinner profileSpinner;
+
+    public String responseValue;
+    public int value;
+
+    public String hashSha;
+    public static int NO_OPTIONS = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,26 +67,62 @@ public class RegistrationUser extends Pattern{
         userNameEditText = (EditText) findViewById(R.id.fullNameEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         registrationUserButton = (Button) findViewById(R.id.registrationUserButton);
-        spinner = (Spinner) findViewById(R.id.profileSpinner);
+        profileSpinner = (Spinner) findViewById(R.id.profileSpinner);
 
         new LookupProfile().execute();
 
         registrationUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (userNameEditText.getText().toString().equals("") || emailEditText.getText().toString().equals("")
-                        || passwordEditText.getText().toString().equals("")){
-                    Toast.makeText(getBaseContext(), R.string.CorrectRegistration, Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    new Registator().execute();
-                    Intent intent = new Intent(RegistrationUser.this, Navigator.class);
-                    startActivity(intent);
-                }
+//                if (userNameEditText.getText().toString().equals("") || emailEditText.getText().toString().equals("")
+//                        || passwordEditText.getText().toString().equals("")){
+//                    Toast.makeText(getBaseContext(), R.string.CorrectRegistration, Toast.LENGTH_SHORT).show();
+//                }
+//                else{
+//                    int profilePosition = profileSpinner.getSelectedItemPosition();
+//                    String profile = arrayProfiles[profilePosition];
+//
+//                    if (profile.equals("Администратор")) {
+//                        new Registrator().execute();
+//                        if (value == 0) {
+//                            Intent intent = new Intent(RegistrationUser.this, AdminProfileActivity.class);
+//                            startActivity(intent);
+//                        }
+//                    }
+//                    else{
+//                        if (profile.equals("Регистратор")) {
+//                            new Registrator().execute();
+//                            if (value == 0) {
+//                                Intent intent = new Intent(RegistrationUser.this, RegistrationProfileActivity.class);
+//                                startActivity(intent);
+//                            }
+//                        }
+//                        else{
+//                            if (profile.equals("Врач")) {
+//                                new Registrator().execute();
+//                                if (value == 0) {
+//                                    Intent intent = new Intent(RegistrationUser.this, DoctorProfileActivity.class);
+//                                    startActivity(intent);
+//                                }
+//                            }
+//                            else{
+//                                if (profile.equals("Пациент")) {
+//                                    new Registrator().execute();
+//                                    if (value == 0) {
+//                                        Intent intent = new Intent(RegistrationUser.this, ParticientProfileActivity.class);
+//                                        startActivity(intent);
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+                new Registrator().execute();
             }
         });
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        profileSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "Spinner " + arrayProfiles[position]);
@@ -87,14 +135,35 @@ public class RegistrationUser extends Pattern{
         });
     }
 
-    public class Registator extends AsyncTask<String, String, String> {
+    public class Registrator extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... params) {
             String fullName = userNameEditText.getText().toString();
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
-            int profilePosition = spinner.getSelectedItemPosition();
+            int profilePosition = profileSpinner.getSelectedItemPosition();
+
+//            MessageDigest sha1 = null;
+//
+//            try {
+//                sha1 = MessageDigest.getInstance("SHA-1");
+//                sha1.update(password.getBytes("ASCII"));
+//                byte[] data = sha1.digest();
+//                hashSha = convertToHex(data);
+//
+//                Log.d(TAG, "SHA-1 " + hashSha);
+//
+//
+//
+//            } catch (NoSuchAlgorithmException e) {
+//                e.printStackTrace();
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+
 
             client = new DefaultHttpClient();
             post = new HttpPost("http://dentists.16mb.com/RegistrationScript/UserRegistrationScript.php");
@@ -105,6 +174,7 @@ public class RegistrationUser extends Pattern{
             try {
                 json.put("fullName", fullName);
                 json.put("email", email);
+//                json.put("password", hashSha);
                 json.put("password", password);
                 json.put("profileKod", arrayProfileKod[profilePosition]);
 
@@ -117,6 +187,28 @@ public class RegistrationUser extends Pattern{
                 if (response != null) {
                     InputStream in = response.getEntity().getContent(); // Get the
                     Log.i("Read from Server", in.toString());
+
+                    BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+//                    JSONObject jsonObject = new JSONObject(sb.toString());
+                    Log.d(TAG, "Response " + sb.toString());
+                    if (!sb.toString().equals("")) {
+                        JSONObject jsonValue = new JSONObject(sb.toString());
+                        responseValue = jsonValue.getString("request");
+
+                        value = 1;
+                        Log.d(TAG, "Response value " + responseValue);
+
+                    }
+                    else{
+                        value = 0;
+
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -128,58 +220,158 @@ public class RegistrationUser extends Pattern{
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if (value == 1) {
+                Toast.makeText(getBaseContext(), R.string.CorrectUser, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                if (value == 0) {
+                    if (userNameEditText.getText().toString().equals("") || emailEditText.getText().toString().equals("")
+                            || passwordEditText.getText().toString().equals("")) {
+                        Toast.makeText(getBaseContext(), R.string.CorrectRegistration, Toast.LENGTH_SHORT).show();
+                    } else {
+                        int profilePosition = profileSpinner.getSelectedItemPosition();
+                        String profile = arrayProfiles[profilePosition];
+
+                        if (profile.equals("Администратор")) {
+                            Mail m = new Mail("Glebjn@yandex.ua", "Gleb80507078620");
+                            String[] toArr = {emailEditText.getText().toString()}; // This is an array, you can add more emails, just separate them with a coma
+                            m.setTo(toArr); // load array to setTo function
+                            m.setFrom("Glebjn@yandex.ua"); // who is sending the email
+                            m.setSubject("Спасибо за регистрацию в системе DentistCard");
+                            String newLine = System.getProperty("line.separator");
+                            m.setBody("Здравствуйте, уважаемый " + userNameEditText.getText().toString() + "." + newLine +
+                                "Спасибо, что зарегистировались в DentistCard" + newLine +
+                                "Ваш логин: " + userNameEditText.getText().toString() + newLine +
+                                "Ваш пароль: " + passwordEditText.getText().toString() + newLine +
+                                "Ваш email: " + emailEditText.getText().toString() + newLine +
+                                "Ваш профиль: " + profile);
+
+
+                            try {
+                                if(m.send()) {
+                                    // success
+                                    Toast.makeText(RegistrationUser.this, "Email was sent successfully.", Toast.LENGTH_LONG).show();
+                                } else {
+                                    // failure
+                                    Toast.makeText(RegistrationUser.this, "Email was not sent.", Toast.LENGTH_LONG).show();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            Intent intent = new Intent(RegistrationUser.this, AdminProfileActivity.class);
+                            startActivity(intent);
+                        }
+                        else {
+                            if (profile.equals("Регистратор")) {
+                                Mail m = new Mail("Glebjn@yandex.ua", "Gleb80507078620");
+                                String[] toArr = {emailEditText.getText().toString()}; // This is an array, you can add more emails, just separate them with a coma
+                                m.setTo(toArr); // load array to setTo function
+                                m.setFrom("Glebjn@yandex.ua"); // who is sending the email
+                                m.setSubject("Спасибо за регистрацию в системе DentistCard");
+                                String newLine = System.getProperty("line.separator");
+                                m.setBody("Здравствуйте, уважаемый " + userNameEditText.getText().toString() + "." + newLine +
+                                        "Спасибо, что зарегистировались в DentistCard" + newLine +
+                                        "Ваш логин: " + userNameEditText.getText().toString() + newLine +
+                                        "Ваш пароль: " + passwordEditText.getText().toString() + newLine +
+                                        "Ваш email: " + emailEditText.getText().toString() + newLine +
+                                        "Ваш профиль: " + profile);
+
+                                try {
+                                    if(m.send()) {
+                                        // success
+                                        Toast.makeText(RegistrationUser.this, "Email was sent successfully.", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        // failure
+                                        Toast.makeText(RegistrationUser.this, "Email was not sent.", Toast.LENGTH_LONG).show();
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                                Intent intent = new Intent(RegistrationUser.this, RegistrationProfileActivity.class);
+                                startActivity(intent);
+                            }
+                            else {
+                                if (profile.equals("Врач")) {
+                                    Mail m = new Mail("Glebjn@yandex.ua", "Gleb80507078620");
+                                    String[] toArr = {emailEditText.getText().toString()}; // This is an array, you can add more emails, just separate them with a coma
+                                    m.setTo(toArr); // load array to setTo function
+                                    m.setFrom("Glebjn@yandex.ua"); // who is sending the email
+                                    m.setSubject("Спасибо за регистрацию в системе DentistCard");
+                                    String newLine = System.getProperty("line.separator");
+                                    m.setBody("Здравствуйте, уважаемый " + userNameEditText.getText().toString() + "." + newLine +
+                                            "Спасибо, что зарегистировались в DentistCard" + newLine +
+                                            "Ваш логин: " + userNameEditText.getText().toString() + newLine +
+                                            "Ваш пароль: " + passwordEditText.getText().toString() + newLine +
+                                            "Ваш email: " + emailEditText.getText().toString() + newLine +
+                                            "Ваш профиль: " + profile);
+
+                                    try {
+                                        if(m.send()) {
+                                            // success
+                                            Toast.makeText(RegistrationUser.this, "Email was sent successfully.", Toast.LENGTH_LONG).show();
+                                        } else {
+                                            // failure
+                                            Toast.makeText(RegistrationUser.this, "Email was not sent.", Toast.LENGTH_LONG).show();
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    Intent intent = new Intent(RegistrationUser.this, DoctorProfileActivity.class);
+                                    intent.putExtra(Login.FULLNAME, userNameEditText.getText().toString());
+                                    startActivity(intent);
+                                }
+                                else {
+                                    if (profile.equals("Пациент")) {
+                                        Mail m = new Mail("Glebjn@yandex.ua", "Gleb80507078620");
+                                        String[] toArr = {emailEditText.getText().toString()}; // This is an array, you can add more emails, just separate them with a coma
+                                        m.setTo(toArr); // load array to setTo function
+                                        m.setFrom("Glebjn@yandex.ua"); // who is sending the email
+                                        m.setSubject("Спасибо за регистрацию в системе DentistCard");
+                                        String newLine = System.getProperty("line.separator");
+                                        m.setBody("Здравствуйте, уважаемый " + userNameEditText.getText().toString() + "." + newLine +
+                                                "Спасибо, что зарегистировались в DentistCard" + newLine +
+                                                "Ваш логин: " + userNameEditText.getText().toString() + newLine +
+                                                "Ваш пароль: " + passwordEditText.getText().toString() + newLine +
+                                                "Ваш email: " + emailEditText.getText().toString() + newLine +
+                                                "Ваш профиль: " + profile);
+
+                                        try {
+                                            if(m.send()) {
+                                                // success
+                                                Toast.makeText(RegistrationUser.this, "Email was sent successfully.", Toast.LENGTH_LONG).show();
+                                            } else {
+                                                // failure
+                                                Toast.makeText(RegistrationUser.this, "Email was not sent.", Toast.LENGTH_LONG).show();
+                                            }
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        Intent intent = new Intent(RegistrationUser.this, ParticientProfileActivity.class);
+                                        startActivity(intent);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 Toast.makeText(getBaseContext(), R.string.Send, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
-//    public class Loader extends AsyncTask<String, String, String[]>{
-//
-//        @Override
-//        protected String[] doInBackground(String... params) {
-//            String jsonContent = request.makeRequest("http://dentists.16mb.com/SelectLookupQuery/SelectUserRegistrationLookup.php");
-//
-//            Log.d(TAG, jsonContent);
-//            try {
-//                JSONArray array = new JSONArray(jsonContent);
-//                arrayIdUserRegistration = new int[array.length()];
-//                arrayFullName = new String[array.length()];
-//                arrayEmail = new String[array.length()];
-//                arrayPassword = new String[array.length()];
-//                arrayProfiles = new String[array.length()];
-//                arrayProfileKod = new int[array.length()];
-//
-//                new LookupProfile().execute();
-//
-//
-//                for (int i = 0; i < array.length(); i++){
-//                    JSONObject jObject = array.getJSONObject(i);
-//                    String fullName = jObject.getString("FullName");
-//                    String email = jObject.getString("Email");
-//                    String password = jObject.getString("Password");
-//                    //String profile = jObject.getString("Profile");
-//                    //int profileKod = jObject.getInt("ProfileKod");
-//
-//                    arrayFullName[i] = fullName;
-//                    arrayEmail[i] = email;
-//                    arrayPassword[i] = password;
-//                    //arrayProfiles[i] = profile;
-//                    //arrayProfileKod[i] = profileKod;
-//
-//                }
-//
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//            return arrayFullName;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String[] value) {
-//
-//        }
-//    }
+    private static String convertToHex(byte[] data) throws java.io.IOException
+    {
+        StringBuffer sb = new StringBuffer();
+        String hex=null;
+        hex = Base64.encodeToString(data, 0, data.length, NO_OPTIONS);
+        sb.append(hex);
+
+        return sb.toString();
+    }
 
     public class LookupProfile extends AsyncTask<String, String, String[]>{
 
@@ -215,12 +407,13 @@ public class RegistrationUser extends Pattern{
         @Override
         protected void onPostExecute(String[] value) {
             /**
-             * Adapter for add content in spinner from table Profiles
+             * Adapter for add content in profileSpinner from table Profiles
              */
             ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_item, arrayProfiles);
             adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(adapterSpinner);
+            profileSpinner.setAdapter(adapterSpinner);
 
         }
     }
+
 }
