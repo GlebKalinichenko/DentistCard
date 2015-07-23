@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:colorPrimary">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email: "
+            android:textSize="34sp"
+            android:id="@+id/emailTextView"
+            android:textColor="?android:textColorTertiary"
+            android:layout_weight="2"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/emailSpinner"
+            android:textSize="34sp"
+            android:layout_weight="1"
+            android:textColor="?android:textColorTertiary"/>
+
+
+    </LinearLayout>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/themeEditText"
+            android:hint="Тема"
+            android:text="Укажите тему"
+            android:textCursorDrawable="@drawable/text_cursor_cyan"
+            android:textSize="34sp"
+            android:layout_marginTop="40dp"
+            android:textColor="?android:textColorTertiary"
+            app:met_baseColor="@android:color/white"
+            app:met_floatingLabel="highlight"
+            app:met_maxCharacters="60"
+            app:met_primaryColor="?colorAccent"
+            app:met_singleLineEllipsis="true" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textEditText"
+            android:hint="Текст"
+            android:text="Укажите текст"
+            android:textCursorDrawable="@drawable/text_cursor_cyan"
+            android:textSize="34sp"
+            android:layout_marginTop="40dp"
+            android:textColor="?android:textColorTertiary"
+            app:met_baseColor="@android:color/white"
+            app:met_floatingLabel="highlight"
+            app:met_maxCharacters="150"
+            app:met_primaryColor="?colorAccent"
+            android:gravity="top|left"
+            android:inputType="textEmailAddress|textMultiLine"
+            android:lines="20"
+            android:minLines="5"
+            android:scrollHorizontally="false"
+            android:scrollbars="vertical"
+            android:singleLine="false"/>
+
+    <com.xgc1986.ripplebutton.widget.RippleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sendButton"
+        android:text="@string/Insert"
+        android:layout_gravity="center"
+        android:background="#1E88E5"
+        app:rippleColor="@android:color/white"/>
+
+    <!--<EditText-->
+        <!--android:id="@+id/addr_edittext"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="top|left"-->
+        <!--android:inputType="textEmailAddress|textMultiLine"-->
+        <!--android:lines="20"-->
+        <!--android:minLines="5"-->
+        <!--android:scrollHorizontally="false"-->
+        <!--android:scrollbars="vertical"-->
+        <!--android:singleLine="false" />-->
+
+</LinearLayout>
