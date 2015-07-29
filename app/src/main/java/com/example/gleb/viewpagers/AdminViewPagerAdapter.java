@@ -16,6 +16,7 @@ import com.example.gleb.fragments.PostFragment;
 import com.example.gleb.fragments.RecomendationFragment;
 import com.example.gleb.fragments.RegistrationFragment;
 import com.example.gleb.fragments.TicketDoctorFragment;
+import com.example.gleb.fragments.TicketFragment;
 
 /**
  * Created by gleb on 13.07.15.
@@ -65,7 +66,7 @@ public class AdminViewPagerAdapter extends FragmentStatePagerAdapter {
                         } else {
                             if (position == 5) // if the position is 0 we are returning the First tab
                             {
-                                TicketDoctorFragment tab6 = new TicketDoctorFragment();
+                                TicketFragment tab6 = new TicketFragment();
                                 return tab6;
                             } else {
                                 if (position == 6) // if the position is 0 we are returning the First tab
