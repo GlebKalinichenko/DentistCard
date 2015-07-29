@@ -6,7 +6,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 
 import com.example.gleb.fragments.DoctorFragment;
+import com.example.gleb.fragments.ParticientDoctorFragment;
 import com.example.gleb.fragments.ParticientFragment;
+import com.example.gleb.fragments.RecomendationDoctorFragment;
 import com.example.gleb.fragments.RecomendationFragment;
 import com.example.gleb.fragments.TicketDoctorFragment;
 
@@ -43,7 +45,7 @@ public class DoctorViewPagerAdapter extends FragmentStatePagerAdapter {
         {
             if (position == 1) // if the position is 0 we are returning the First tab
             {
-                ParticientFragment tab2 = new ParticientFragment();
+                ParticientDoctorFragment tab2 = new ParticientDoctorFragment(fullName);
                 return tab2;
             } else {
                 if (position == 2) // if the position is 0 we are returning the First tab
@@ -52,7 +54,7 @@ public class DoctorViewPagerAdapter extends FragmentStatePagerAdapter {
                     return tab3;
                 }
             }
-            RecomendationFragment tab4 = new RecomendationFragment();
+            RecomendationDoctorFragment tab4 = new RecomendationDoctorFragment(fullName);
             return tab4;
         }
     }
