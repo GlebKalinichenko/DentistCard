@@ -225,47 +225,7 @@ public class RecomendationDoctorFragment extends Fragment {
 
         @Override
         protected String[] doInBackground(String... params) {
-//            //String with JSON
-//            String jsonContent = request.makeRequest("http://dentists.16mb.com/SelectLookupQuery/SelectRecomendationLookup.php");
-//            //Fields of table Recommendation
-//
-//            Log.d(TAG, jsonContent);
-//            try {
-//                //create JSON array for parse it
-//                JSONArray array = new JSONArray(jsonContent);
-//                arrayIdRecommendation = new int[array.length()];
-//                arrayTicketKod = new String[array.length()];
-//                arrayDiagnoseKod = new String[array.length()];
-//                arrayTherapy = new String[array.length()];
-//                arrayComplaints = new String[array.length()];
-//                arrayHistoryIllness = new String[array.length()];
-//                arrayObjectiveValues = new String[array.length()];
-//                arrayOldIdTicket = new int[array.length()];
-//                arrayOldIdDiagnose = new int[array.length()];
-//
-//                for (int i = 0; i < array.length(); i++) {
-//                    //parse of array
-//                    JSONObject jObject = array.getJSONObject(i);
-//                    arrayOldIdTicket[i] = jObject.getInt("IdTicket");
-//                    arrayOldIdDiagnose[i] = jObject.getInt("IdDiagnose");
-//                    arrayTicketKod[i] = jObject.getString("DateReception");
-//                    arrayDiagnoseKod[i] = jObject.getString("Diagnose");
-//                    arrayTherapy[i] = jObject.getString("Therapy");
-//                    arrayHistoryIllness[i] = jObject.getString("HistoryIllness");
-//                    arrayObjectiveValues[i] = jObject.getString("ObjectiveValues");
-//                    arrayComplaints[i] = jObject.getString("Complaints");
-//
-//                    recomendations.add(new Recomendation(jObject.getString("DateReception"), jObject.getString("Diagnose"),
-//                            jObject.getString("Therapy"), jObject.getString("HistoryIllness"), jObject.getString("ObjectiveValues"),
-//                            jObject.getString("Complaints")));
-//
-//                    Log.d(TAG, arrayTherapy[i]);
-//                }
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-
+            //String with JSON
             client = new DefaultHttpClient();
             post = new HttpPost("http://dentists.16mb.com/SelectLookupQuery/RecomendationDoctorProfile.php");
             HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); // Timeout
