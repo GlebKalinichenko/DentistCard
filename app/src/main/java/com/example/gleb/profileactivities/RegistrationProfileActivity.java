@@ -1,12 +1,12 @@
 package com.example.gleb.profileactivities;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,9 +14,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.example.gleb.autoresationregistrator.Autoresation;
+import com.example.gleb.charts.ChartActivity;
 import com.example.gleb.dentistcard.R;
 import com.example.gleb.fragments.SlidingTabLayout;
-import com.example.gleb.viewpagers.AdminViewPagerAdapter;
 import com.example.gleb.viewpagers.RegistrationViewPagerAdapter;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
@@ -28,10 +29,24 @@ import com.mikepenz.materialdrawer.model.interfaces.Badgeable;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 
+import java.util.Properties;
+
+import javax.mail.Address;
+import javax.mail.BodyPart;
+import javax.mail.Flags;
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.Session;
+import javax.mail.Store;
+import javax.mail.internet.InternetAddress;
+import javax.mail.search.FlagTerm;
+
 /**
  * Created by gleb on 14.07.15.
  */
 public class RegistrationProfileActivity extends ProfilePattern {
+    public static final String TAG = "TAG";
     private CharSequence[] Titles = {
         "Смены", "Врачи", "Пациенты", "Билеты", "Регистрации", "Расписание"
     };
@@ -56,11 +71,11 @@ public class RegistrationProfileActivity extends ProfilePattern {
 
         drawer.addDrawerItems(
                 new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withBadge("99").withIdentifier(1),
-                new PrimaryDrawerItem().withName(R.string.drawer_item_free_play).withIcon(FontAwesome.Icon.faw_gamepad),
-                new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withBadge("6").withIdentifier(2),
+                new PrimaryDrawerItem().withName(R.string.ShowMail).withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(2),
+                new PrimaryDrawerItem().withName(R.string.SkillDoctor).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(3),
                 new SectionDrawerItem().withName(R.string.drawer_item_settings),
-                new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog),
-                new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_question).setEnabled(false),
+                new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(4),
+                new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_question).setEnabled(false).withIdentifier(5),
                 new DividerDrawerItem(),
                 new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_github).withBadge("12+").withIdentifier(1)
         );
@@ -87,17 +102,32 @@ public class RegistrationProfileActivity extends ProfilePattern {
                 }
                 if (drawerItem instanceof Badgeable) {
                     Badgeable badgeable = (Badgeable) drawerItem;
-                    if (badgeable.getBadge() != null) {
-                        // учтите, не делайте так, если ваш бейдж содержит символ "+"
-                        try {
-                            int badge = Integer.valueOf(badgeable.getBadge());
-                            if (badge > 0) {
-                                drawerResult.updateBadge(String.valueOf(badge - 1), position);
-                            }
-                        } catch (Exception e) {
-                            Log.d("test", "Не нажимайте на бейдж, содержащий плюс! :)");
-                        }
+                    int item = drawerItem.getIdentifier();
+                    switch(item){
+                        case 2:
+                            //new Loader("pop.yandex.ru", "pop3", "Makbluming@yandex.ua", "0954023873").execute();
+                            Intent intent = new Intent(RegistrationProfileActivity.this, Autoresation.class);
+                            startActivity(intent);
+                            Log.d(TAG, "RegistrationProfileActivity");
+                            break;
+
+                        case 3:
+                            Intent chartIntent = new Intent(RegistrationProfileActivity.this, ChartActivity.class);
+                            startActivity(chartIntent);
+                            break;
                     }
+
+//                    if (badgeable.getBadge() != null) {
+//                        // учтите, не делайте так, если ваш бейдж содержит символ "+"
+//                        try {
+//                            int badge = Integer.valueOf(badgeable.getBadge());
+//                            if (badge > 0) {
+//                                drawerResult.updateBadge(String.valueOf(badge - 1), position);
+//                            }
+//                        } catch (Exception e) {
+//                            Log.d("test", "Не нажимайте на бейдж, содержащий плюс! :)");
+//                        }
+//                    }
                 }
             }
         });
@@ -137,6 +167,95 @@ public class RegistrationProfileActivity extends ProfilePattern {
         tabs.setViewPager(pager);
     }
 
+    public class Loader extends AsyncTask<String, String, String[]> {
+        public String pop3Host;
+        public String storeType;
+        public String user;
+        public String password;
+
+        public Loader(String pop3Host, String storeType, String user, String password) {
+            this.pop3Host = pop3Host;
+            this.storeType = storeType;
+            this.user = user;
+            this.password = password;
+        }
+
+        @Override
+        protected String[] doInBackground(String... params) {
+            Properties props = new Properties();
+            props.put("mail.smtp.port", 993);
+            props.put("mail.smtp.socketFactory.port", 993);
+            props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+            props.put("mail.smtp.socketFactory.fallback", "false");
+            props.setProperty("mail.store.protocol", "imaps");
+            try {
+                Session session = Session.getInstance(props, null);
+                Store store = session.getStore();
+                store.connect("imap.yandex.ru", "Makbluming@yandex.ua", "0954023873");
+                Folder inbox = store.getFolder("INBOX");
+                inbox.open(Folder.READ_ONLY);
+
+                FlagTerm ft = new FlagTerm(new Flags(Flags.Flag.SEEN), false);
+                Message messages[] = inbox.search(ft);
+
+                for (Message msg : messages) {
+                    Address[] in = msg.getFrom();
+                    for (Address address : in) {
+                        System.out.println("FROM:" + address.toString());
+                    }
+
+                    Object content = msg.getContent();
+                    if (content instanceof String) {
+                        String body = (String) content;
+                        Log.d(TAG, "SENT DATE: " + msg.getSentDate());
+                        Log.d(TAG, "SUBJECT: " + msg.getSubject());
+                        Log.d(TAG, "Content " + body);
+                    } else if (content instanceof Multipart) {
+                        Multipart mp = (Multipart) content;
+                        BodyPart bp = mp.getBodyPart(0);
+//                String mp = (String) msg.getContent();
+                        Log.d(TAG, "SENT DATE: " + msg.getSentDate());
+                        Log.d(TAG, "SUBJECT: " + msg.getSubject());
+                        Log.d(TAG, "Content " + bp.getContent());
+
+                    }
+                }
+
+//                Multipart mp = (Multipart) msg.getContent();
+//                BodyPart bp = mp.getBodyPart(0);
+////                String mp = (String) msg.getContent();
+//                System.out.println("SENT DATE: " + msg.getSentDate());
+//                System.out.println("SUBJECT: " + msg.getSubject());
+//                Log.d(TAG, "Content " + msg.getContent().toString());
+////                System.out.println("CONTENT: " + mp);
+            } catch (Exception mex) {
+                mex.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] value) {
+
+        }
+    }
+
+    private String parseAddresses(Address[] address) {
+
+        String listOfAddress = "";
+        if ((address == null) || (address.length < 1))
+            return null;
+        if (!(address[0] instanceof InternetAddress))
+            return null;
+
+        for (int i = 0; i < address.length; i++) {
+            InternetAddress internetAddress =
+                    (InternetAddress) address[0];
+            listOfAddress += internetAddress.getAddress()+",";
+        }
+        return listOfAddress;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
