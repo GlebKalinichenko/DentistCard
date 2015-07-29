@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.gleb.connection.ConnectionRegistrator;
 import com.example.gleb.profileactivities.AdminProfileActivity;
 import com.example.gleb.profileactivities.DoctorProfileActivity;
 import com.example.gleb.profileactivities.ParticientProfileActivity;
@@ -351,6 +352,8 @@ public class RegistrationUser extends Pattern{
                                         }
 
                                         Intent intent = new Intent(RegistrationUser.this, ParticientProfileActivity.class);
+                                        Log.d(TAG, "RegistrationUser " + emailEditText.getText().toString());
+                                        intent.putExtra(ParticientProfileActivity.EMAIL, emailEditText.getText().toString());
                                         startActivity(intent);
                                     }
                                 }
