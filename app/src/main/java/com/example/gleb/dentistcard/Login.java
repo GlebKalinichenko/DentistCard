@@ -207,7 +207,11 @@ public class Login extends Pattern{
                         }
                         else{
                             if (profile.equals("Пациент")){
+//                                Intent intent = new Intent(Login.this, ParticientProfileActivity.class);
+//                                startActivity(intent);
                                 Intent intent = new Intent(Login.this, ParticientProfileActivity.class);
+                                Log.d(TAG, "RegistrationUser " + emailEditText.getText().toString());
+                                intent.putExtra(ParticientProfileActivity.EMAIL, emailEditText.getText().toString());
                                 startActivity(intent);
                             }
                         }
