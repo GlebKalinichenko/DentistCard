@@ -1,6 +1,8 @@
 package com.example.gleb.profileactivities;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -12,8 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.gleb.connection.ConnectionRegistrator;
+import com.example.gleb.dentistcard.Login;
 import com.example.gleb.dentistcard.R;
 import com.example.gleb.fragments.SlidingTabLayout;
 import com.example.gleb.viewpagers.AdminViewPagerAdapter;
@@ -27,21 +32,49 @@ import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.Badgeable;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
+import com.sun.mail.pop3.POP3Store;
+
+import java.io.IOException;
+import java.util.Properties;
+
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.Session;
 
 /**
  * Created by gleb on 14.07.15.
  */
 public class ParticientProfileActivity extends ProfilePattern {
+    public static final String EMAIL = "Email";
     private CharSequence[] Titles = {"Пациенты", "Врачи", "Рекомендации", "Смены", "Билеты"};
     private int Numboftabs = 5;
+    public ImageButton sendButton;
+    public String emailParticient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.particient_activity_main);
+
+        emailParticient = getIntent().getStringExtra(ParticientProfileActivity.EMAIL);
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        sendButton = (ImageButton) findViewById(R.id.sendButton);
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ParticientProfileActivity.this, ConnectionRegistrator.class);
+                intent.putExtra(ConnectionRegistrator.EMAIL, emailParticient);
+                startActivity(intent);
+
+            }
+        });
+
         setSupportActionBar(toolbar);
+
         toolbar.setTitle(R.string.Changes);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -53,14 +86,14 @@ public class ParticientProfileActivity extends ProfilePattern {
         drawer.withHeader(R.layout.drawer_header);
 
         drawer.addDrawerItems(
-                new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withBadge("99").withIdentifier(1),
-                new PrimaryDrawerItem().withName(R.string.drawer_item_free_play).withIcon(FontAwesome.Icon.faw_gamepad),
-                new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withBadge("6").withIdentifier(2),
+                new PrimaryDrawerItem().withName(R.string.NewMessage).withIcon(FontAwesome.Icon.faw_home).withBadge("+").withIdentifier(1),
+                new PrimaryDrawerItem().withName(R.string.SendMessage).withIcon(FontAwesome.Icon.faw_gamepad).withBadge("").withIdentifier(2),
+                new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withBadge("").withIdentifier(3),
                 new SectionDrawerItem().withName(R.string.drawer_item_settings),
-                new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog),
-                new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_question).setEnabled(false),
+                new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog).withBadge("").withIdentifier(4),
+                new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_question).setEnabled(false).withBadge("").withIdentifier(5),
                 new DividerDrawerItem(),
-                new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_github).withBadge("12+").withIdentifier(1)
+                new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_github).withBadge("12+").withIdentifier(6)
         );
 
         drawer.withOnDrawerListener(new Drawer.OnDrawerListener() {
@@ -80,22 +113,32 @@ public class ParticientProfileActivity extends ProfilePattern {
             @Override
             // Обработка клика
             public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
-                if (drawerItem instanceof Nameable) {
-                    Toast.makeText(ParticientProfileActivity.this, ParticientProfileActivity.this.getString(((Nameable) drawerItem).getNameRes()), Toast.LENGTH_SHORT).show();
-                }
+//                if (drawerItem instanceof Nameable) {
+//                    Toast.makeText(ParticientProfileActivity.this, ParticientProfileActivity.this.getString(((Nameable) drawerItem).getNameRes()), Toast.LENGTH_SHORT).show();
+//                }
                 if (drawerItem instanceof Badgeable) {
                     Badgeable badgeable = (Badgeable) drawerItem;
-                    if (badgeable.getBadge() != null) {
-                        // учтите, не делайте так, если ваш бейдж содержит символ "+"
-                        try {
-                            int badge = Integer.valueOf(badgeable.getBadge());
-                            if (badge > 0) {
-                                drawerResult.updateBadge(String.valueOf(badge - 1), position);
-                            }
-                        } catch (Exception e) {
-                            Log.d("test", "Не нажимайте на бейдж, содержащий плюс! :)");
-                        }
+                    int item = drawerItem.getIdentifier();
+
+                    switch(item){
+                        case 1: break;
+                        case 2:
+                            Intent intent = new Intent(ParticientProfileActivity.this, ConnectionRegistrator.class);
+                            intent.putExtra(ConnectionRegistrator.EMAIL, emailParticient);
+                            startActivity(intent);
+                            break;
                     }
+//                    if (badgeable.getBadge() != null) {
+//                        // учтите, не делайте так, если ваш бейдж содержит символ "+"
+//                        try {
+//                            int badge = Integer.valueOf(badgeable.getBadge());
+//                            if (badge > 0) {
+//                                drawerResult.updateBadge(String.valueOf(badge - 1), position);
+//                            }
+//                        } catch (Exception e) {
+//                            Log.d("test", "Не нажимайте на бейдж, содержащий плюс! :)");
+//                        }
+//                    }
                 }
             }
         });
@@ -134,7 +177,6 @@ public class ParticientProfileActivity extends ProfilePattern {
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
