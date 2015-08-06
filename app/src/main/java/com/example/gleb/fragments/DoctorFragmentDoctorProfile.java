@@ -23,13 +23,9 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.gleb.adapters.DoctorAdapter;
 import com.example.gleb.dentistcard.DatabaseRequest;
-import com.example.gleb.dentistcard.Login;
 import com.example.gleb.dentistcard.Pattern;
 import com.example.gleb.dentistcard.R;
-import com.example.gleb.insert.InsertCity;
 import com.example.gleb.insert.InsertDoctor;
-import com.example.gleb.insert.InsertRecommendation;
-import com.example.gleb.profileactivities.DoctorHelp;
 import com.example.gleb.tables.Doctor;
 import com.mikepenz.materialdrawer.Drawer;
 
