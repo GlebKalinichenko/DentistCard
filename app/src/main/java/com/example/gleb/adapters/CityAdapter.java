@@ -49,8 +49,8 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
 
     @Override
     public void onBindViewHolder(CityViewHolder CountryViewHolder, int i) {
-        CountryViewHolder.countryKodTextView.setText(cities.get(i).countryKod);
-        CountryViewHolder.cityTextView.setText(cities.get(i).city);
+        CountryViewHolder.countryKodTextView.setText("Страна: " + cities.get(i).countryKod);
+        CountryViewHolder.cityTextView.setText("Город: " + cities.get(i).city);
     }
 
     public void removeData(int position) {
