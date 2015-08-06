@@ -23,6 +23,8 @@ import com.example.gleb.adapters.DepartmentDoctorAdapter;
 import com.example.gleb.dentistcard.DatabaseRequest;
 import com.example.gleb.dentistcard.Pattern;
 import com.example.gleb.dentistcard.R;
+import com.example.gleb.insert.InsertChange;
+import com.example.gleb.insert.InsertDepartmentDoctor;
 import com.example.gleb.insert.InsertParticient;
 import com.example.gleb.tables.DepartmentDoctor;
 import com.mikepenz.materialdrawer.Drawer;
@@ -66,6 +68,11 @@ public class DepartmentDoctorFragment extends Fragment {
     protected HttpClient client;
     protected HttpPost post;
 
+    public String profile;
+
+    public DepartmentDoctorFragment(String profile) {
+        this.profile = profile;
+    }
 
     @Nullable
     @Override
@@ -86,7 +93,8 @@ public class DepartmentDoctorFragment extends Fragment {
         addImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), InsertParticient.class);
+                Intent intent = new Intent(getActivity(), InsertDepartmentDoctor.class);
+                intent.putExtra(InsertDepartmentDoctor.PROFILE, profile);
                 startActivity(intent);
             }
         });
@@ -109,7 +117,13 @@ public class DepartmentDoctorFragment extends Fragment {
 
                                     @Override
                                     public void onPositive(MaterialDialog dialog) {
-                                        new Updater().execute();
+                                        if (newDepartmentDoctorEditText.getText().toString().equals("")) {
+                                            Toast.makeText(getActivity(), R.string.AddContent, Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+
+                                            new Updater().execute();
+                                        }
                                     }
                                 })
                                 .show();
