@@ -25,6 +25,7 @@ import com.example.gleb.adapters.RegistrationAdapter;
 import com.example.gleb.dentistcard.DatabaseRequest;
 import com.example.gleb.dentistcard.Pattern;
 import com.example.gleb.dentistcard.R;
+import com.example.gleb.insert.InsertChange;
 import com.example.gleb.insert.InsertRegistration;
 import com.example.gleb.tables.Registration;
 import com.mikepenz.materialdrawer.Drawer;
@@ -74,6 +75,12 @@ public class RegistrationFragment extends Fragment {
     protected HttpClient client;
     protected HttpPost post;
 
+    public String profile;
+
+    public RegistrationFragment(String profile) {
+        this.profile = profile;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -94,6 +101,7 @@ public class RegistrationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), InsertRegistration.class);
+                intent.putExtra(InsertRegistration.PROFILE, profile);
                 startActivity(intent);
             }
         });
@@ -118,7 +126,12 @@ public class RegistrationFragment extends Fragment {
 
                                     @Override
                                     public void onPositive(MaterialDialog dialog) {
-                                        new Updater(position).execute();
+                                        if (newDateRegistrationEditText.getText().toString().equals("")) {
+                                            Toast.makeText(getActivity(), R.string.AddContent, Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+                                            new Updater(position).execute();
+                                        }
                                     }
                                 })
                                 .show();
