@@ -23,6 +23,8 @@ import com.example.gleb.adapters.DiagnoseAdapter;
 import com.example.gleb.dentistcard.DatabaseRequest;
 import com.example.gleb.dentistcard.Pattern;
 import com.example.gleb.dentistcard.R;
+import com.example.gleb.insert.InsertDiagnose;
+import com.example.gleb.insert.InsertDoctor;
 import com.example.gleb.insert.InsertParticient;
 import com.example.gleb.tables.Diagnose;
 import com.mikepenz.materialdrawer.Drawer;
@@ -66,6 +68,12 @@ public class DiagnoseFragment extends Fragment {
     protected HttpClient client;
     protected HttpPost post;
 
+    public String profile;
+
+    public DiagnoseFragment(String profile) {
+        this.profile = profile;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,7 +93,8 @@ public class DiagnoseFragment extends Fragment {
         addImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), InsertParticient.class);
+                Intent intent = new Intent(getActivity(), InsertDiagnose.class);
+                intent.putExtra(InsertDiagnose.PROFILE, profile);
                 startActivity(intent);
             }
         });
@@ -108,7 +117,13 @@ public class DiagnoseFragment extends Fragment {
 
                                     @Override
                                     public void onPositive(MaterialDialog dialog) {
-                                        new Updater().execute();
+                                        if (newDiagnoseEditText.getText().toString().equals("")) {
+                                            Toast.makeText(getActivity(), R.string.AddContent, Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+
+                                            new Updater().execute();
+                                        }
                                     }
                                 })
                                 .show();
