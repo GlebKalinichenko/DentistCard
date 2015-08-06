@@ -49,8 +49,8 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
 
     @Override
     public void onBindViewHolder(RegistrationViewHolder registrationViewHolder, int i) {
-        registrationViewHolder.particientKodTextView.setText(registrations.get(i).particientKod);
-        registrationViewHolder.dateRegistrationTextView.setText(registrations.get(i).dateRegistration);
+        registrationViewHolder.particientKodTextView.setText("Пациент: " + registrations.get(i).particientKod);
+        registrationViewHolder.dateRegistrationTextView.setText("Дата регистрации: " + registrations.get(i).dateRegistration);
     }
 
     public void removeData(int position) {
