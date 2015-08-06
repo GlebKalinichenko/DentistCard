@@ -26,6 +26,8 @@ import com.example.gleb.dentistcard.DatabaseRequest;
 import com.example.gleb.dentistcard.Pattern;
 import com.example.gleb.dentistcard.R;
 import com.example.gleb.insert.InsertChange;
+import com.example.gleb.insert.InsertDoctor;
+import com.example.gleb.insert.InsertTimetable;
 import com.example.gleb.tables.Timetable;
 import com.mikepenz.materialdrawer.Drawer;
 
@@ -84,6 +86,12 @@ public class TimetableFragment extends Fragment {
     protected HttpPost post;
     protected ImageButton imageButton;
 
+    public String profile;
+
+    public TimetableFragment(String profile) {
+        this.profile = profile;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -101,8 +109,9 @@ public class TimetableFragment extends Fragment {
         addImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), InsertChange.class);
-                startActivity(intent);
+            Intent intent = new Intent(v.getContext(), InsertTimetable.class);
+            intent.putExtra(InsertTimetable.PROFILE, profile);
+            startActivity(intent);
             }
         });
 
@@ -129,7 +138,12 @@ public class TimetableFragment extends Fragment {
 
                                     @Override
                                     public void onPositive(MaterialDialog dialog) {
-                                        new Updater(position).execute();
+                                        if (newDateWorkEditText.getText().toString().equals("")) {
+                                            Toast.makeText(getActivity(), R.string.AddContent, Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+                                            new Updater(position).execute();
+                                        }
                                     }
                                 })
                                 .show();
