@@ -80,6 +80,12 @@ public class ChangeFragment extends Fragment {
     protected HttpPost post;
     protected ImageButton imageButton;
 
+    public String profile;
+
+    public ChangeFragment(String profile) {
+        this.profile = profile;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.changeactivity, container,false);
@@ -97,6 +103,7 @@ public class ChangeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), InsertChange.class);
+                intent.putExtra(InsertChange.PROFILE, profile);
                 startActivity(intent);
             }
         });
@@ -121,7 +128,11 @@ public class ChangeFragment extends Fragment {
 
                                     @Override
                                     public void onPositive(MaterialDialog dialog) {
-                                        new Updater().execute();
+                                        if (newChangeEditText.getText().toString().equals("")) {
+                                            Toast.makeText(getActivity(), R.string.AddContent, Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            new Updater().execute();
+                                        }
                                     }
                                 })
                                 .show();
