@@ -23,6 +23,7 @@ import com.example.gleb.adapters.KvalificationAdapter;
 import com.example.gleb.dentistcard.DatabaseRequest;
 import com.example.gleb.dentistcard.Pattern;
 import com.example.gleb.dentistcard.R;
+import com.example.gleb.insert.InsertDiagnose;
 import com.example.gleb.insert.InsertKvalification;
 import com.example.gleb.tables.Kvalification;
 import com.mikepenz.materialdrawer.Drawer;
@@ -66,7 +67,11 @@ public class KvalificationFragment extends Fragment {
     protected HttpClient client;
     protected HttpPost post;
 
+    public String profile;
 
+    public KvalificationFragment(String profile) {
+        this.profile = profile;
+    }
 
     @Nullable
     @Override
@@ -86,6 +91,7 @@ public class KvalificationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), InsertKvalification.class);
+                intent.putExtra(InsertKvalification.PROFILE, profile);
                 startActivity(intent);
             }
         });
@@ -110,7 +116,12 @@ public class KvalificationFragment extends Fragment {
 
                                     @Override
                                     public void onPositive(MaterialDialog dialog) {
-                                        new Updater().execute();
+                                        if (newKvalificationEditText.getText().toString().equals("")) {
+                                            Toast.makeText(getActivity(), R.string.AddContent, Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+                                            new Updater().execute();
+                                        }
                                     }
                                 })
                                 .show();
