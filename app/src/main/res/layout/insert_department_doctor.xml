@@ -1,49 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView android:id="@+id/txtHeader"
-        android:layout_width="fill_parent"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:textStyle="bold"
-        android:textSize="22dp"
-        android:textColor="#FFFFFF"
-        android:padding="10dp"
-        android:text="@string/InsertDepartmentDoctor"
-        android:background="#336699" />
+        android:background="?android:colorAccent"
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize"
+        android:transitionName="actionBar" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/DepartmentDoctor"
-            android:id="@+id/countryKodTextView"
-            android:layout_margin="15dp"
-            android:textSize="20dp"/>
-
-        <EditText
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
             android:id="@+id/departmentEditText"
-            android:layout_gravity="center"
-            android:background="@drawable/insert_edittext"/>
+            android:hint="@string/Department"
+            android:textCursorDrawable="@drawable/text_cursor_cyan"
+            android:textSize="34sp"
+            android:layout_marginTop="40dp"
+            android:textColor="?android:textColorTertiary"
+            app:met_baseColor="?android:colorAccent"
+            app:met_floatingLabel="highlight"
+            app:met_maxCharacters="60"
+            app:met_primaryColor="?colorAccent"
+            app:met_singleLineEllipsis="true"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Insert"
-        android:id="@+id/insertDepartmentButton"
-        android:layout_gravity="center"
-        android:layout_margin="15dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin">
+
+        <ImageButton
+            android:id="@+id/insertDepartmentButton"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/ripple"
+            android:stateListAnimator="@anim/anim"
+            android:src="@mipmap/ic_action_add"
+            android:elevation="1dp" />
+    </RelativeLayout>
 </LinearLayout>
