@@ -23,6 +23,7 @@ import com.example.gleb.adapters.PostAdapter;
 import com.example.gleb.dentistcard.DatabaseRequest;
 import com.example.gleb.dentistcard.Pattern;
 import com.example.gleb.dentistcard.R;
+import com.example.gleb.insert.InsertChange;
 import com.example.gleb.insert.InsertPost;
 import com.example.gleb.tables.Post;
 import com.mikepenz.materialdrawer.Drawer;
@@ -66,6 +67,11 @@ public class PostFragment extends Fragment {
     protected HttpClient client;
     protected HttpPost post;
 
+    public String profile;
+
+    public PostFragment(String profile) {
+        this.profile = profile;
+    }
 
     @Nullable
     @Override
@@ -85,6 +91,7 @@ public class PostFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), InsertPost.class);
+                intent.putExtra(InsertPost.PROFILE, profile);
                 startActivity(intent);
             }
         });
@@ -109,7 +116,12 @@ public class PostFragment extends Fragment {
 
                                     @Override
                                     public void onPositive(MaterialDialog dialog) {
-                                        new Updater().execute();
+                                        if (newPostEditText.getText().toString().equals("")) {
+                                            Toast.makeText(getActivity(), R.string.AddContent, Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+                                            new Updater().execute();
+                                        }
                                     }
                                 })
                                 .show();
