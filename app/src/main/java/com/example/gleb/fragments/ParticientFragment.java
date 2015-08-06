@@ -87,6 +87,15 @@ public class ParticientFragment extends Fragment {
     protected HttpClient client;
     protected HttpPost post;
 
+    public int freshTicket;
+    public int allTicket;
+
+    public String profile;
+
+    public ParticientFragment(String profile) {
+        this.profile = profile;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -107,6 +116,7 @@ public class ParticientFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), InsertParticient.class);
+                intent.putExtra(InsertParticient.PROFILE, profile);
                 startActivity(intent);
             }
         });
@@ -131,7 +141,13 @@ public class ParticientFragment extends Fragment {
 
                                     @Override
                                     public void onPositive(MaterialDialog dialog) {
-                                        new Updater(position).execute();
+                                        if (newFIOEditText.getText().toString().equals("") || newDateBornEditText.getText().toString().equals("")
+                                                || newAddressEditText.getText().toString().equals("") || newPhoneEditText.getText().toString().equals("")){
+                                            Toast.makeText(getActivity(), R.string.AddContent, Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+                                            new Updater(position).execute();
+                                        }
                                     }
                                 })
                                 .show();
