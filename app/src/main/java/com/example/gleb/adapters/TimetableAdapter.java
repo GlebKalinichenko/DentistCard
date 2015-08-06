@@ -52,9 +52,9 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.Time
 
     @Override
     public void onBindViewHolder(TimetableViewHolder timetableViewHolder, int i) {
-        timetableViewHolder.doctorKodTextView.setText(timetables.get(i).doctorKod);
-        timetableViewHolder.changeKodTextView.setText(timetables.get(i).changeKod);
-        timetableViewHolder.dateWorkTextView.setText(timetables.get(i).dateWork);
+        timetableViewHolder.doctorKodTextView.setText("Врач: " + timetables.get(i).doctorKod);
+        timetableViewHolder.changeKodTextView.setText("Смена: " + timetables.get(i).changeKod);
+        timetableViewHolder.dateWorkTextView.setText("Дата работы:" + timetables.get(i).dateWork);
     }
 
     public void removeData(int position) {
