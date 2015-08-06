@@ -38,60 +38,62 @@ public class AdminViewPagerAdapter extends FragmentStatePagerAdapter {
     //This method return the fragment for the every position in the View Pager
     @Override
     public Fragment getItem(int position) {
+        String profile = "admin";
+
         if (position == 0) // if the position is 0 we are returning the First tab
         {
-            ChangeFragment tab1 = new ChangeFragment();
+            ChangeFragment tab1 = new ChangeFragment(profile);
             return tab1;
         } else             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
         {
             if (position == 1) // if the position is 0 we are returning the First tab
             {
-                CountryFragment tab2 = new CountryFragment();
+                CountryFragment tab2 = new CountryFragment(profile);
                 return tab2;
             } else {
                 if (position == 2) // if the position is 0 we are returning the First tab
                 {
-                    CityFragment tab3 = new CityFragment();
+                    CityFragment tab3 = new CityFragment(profile);
                     return tab3;
                 } else {
                     if (position == 3) // if the position is 0 we are returning the First tab
                     {
-                        DoctorFragment tab4 = new DoctorFragment();
+                        DoctorFragment tab4 = new DoctorFragment(profile);
                         return tab4;
                     } else {
                         if (position == 4) // if the position is 0 we are returning the First tab
                         {
-                            ParticientFragment tab5 = new ParticientFragment();
+                            ParticientFragment tab5 = new ParticientFragment(profile);
                             return tab5;
                         } else {
                             if (position == 5) // if the position is 0 we are returning the First tab
                             {
-                                TicketFragment tab6 = new TicketFragment();
+                                TicketDoctorFragment tab6 = new TicketDoctorFragment(profile);
                                 return tab6;
                             } else {
                                 if (position == 6) // if the position is 0 we are returning the First tab
                                 {
-                                    DepartmentDoctorFragment tab7 = new DepartmentDoctorFragment();
+                                    DepartmentDoctorFragment tab7 = new DepartmentDoctorFragment(profile);
                                     return tab7;
                                 } else {
                                     if (position == 7) // if the position is 0 we are returning the First tab
                                     {
-                                        DiagnoseFragment tab8 = new DiagnoseFragment();
+                                        DiagnoseFragment tab8 = new DiagnoseFragment(profile);
                                         return tab8;
                                     } else {
                                         if (position == 8) // if the position is 0 we are returning the First tab
                                         {
-                                            KvalificationFragment tab9 = new KvalificationFragment();
+                                            KvalificationFragment tab9 = new KvalificationFragment(profile);
                                             return tab9;
                                         } else {
                                             if (position == 9) // if the position is 0 we are returning the First tab
                                             {
-                                                PostFragment tab10 = new PostFragment();
+                                                PostFragment tab10 = new PostFragment(profile);
                                                 return tab10;
                                             } else {
                                                 if (position == 10) // if the position is 0 we are returning the First tab
                                                 {
-                                                    RecomendationFragment tab11 = new RecomendationFragment();
+                                                    RecomendationFragment tab11 = new RecomendationFragment(profile);
                                                     return tab11;
                                                 }
 
@@ -112,7 +114,7 @@ public class AdminViewPagerAdapter extends FragmentStatePagerAdapter {
                 }
 
             }
-            RegistrationFragment tab12 = new RegistrationFragment();
+            RegistrationFragment tab12 = new RegistrationFragment(profile);
             return tab12;
         }
     }
