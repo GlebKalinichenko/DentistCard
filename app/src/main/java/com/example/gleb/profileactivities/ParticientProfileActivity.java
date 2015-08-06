@@ -50,7 +50,6 @@ public class ParticientProfileActivity extends ProfilePattern {
     public static final String EMAIL = "Email";
     private CharSequence[] Titles = {"Пациенты", "Врачи", "Рекомендации", "Смены", "Билеты"};
     private int Numboftabs = 5;
-    public ImageButton sendButton;
     public String emailParticient;
 
     @Override
@@ -61,18 +60,6 @@ public class ParticientProfileActivity extends ProfilePattern {
         emailParticient = getIntent().getStringExtra(ParticientProfileActivity.EMAIL);
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        sendButton = (ImageButton) findViewById(R.id.sendButton);
-
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ParticientProfileActivity.this, ConnectionRegistrator.class);
-                intent.putExtra(ConnectionRegistrator.EMAIL, emailParticient);
-                startActivity(intent);
-
-            }
-        });
-
         setSupportActionBar(toolbar);
 
         toolbar.setTitle(R.string.Changes);
@@ -125,6 +112,7 @@ public class ParticientProfileActivity extends ProfilePattern {
                         case 2:
                             Intent intent = new Intent(ParticientProfileActivity.this, ConnectionRegistrator.class);
                             intent.putExtra(ConnectionRegistrator.EMAIL, emailParticient);
+                            intent.putExtra(ConnectionRegistrator.PROFILE, "particient");
                             startActivity(intent);
                             break;
                     }
