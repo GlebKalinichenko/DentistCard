@@ -30,34 +30,35 @@ public class RegistrationViewPagerAdapter extends FragmentStatePagerAdapter {
     //This method return the fragment for the every position in the View Pager
     @Override
     public Fragment getItem(int position) {
+            String profile = "registrator";
             if(position == 0) // if the position is 0 we are returning the First tab
             {
-                ChangeFragment tab1 = new ChangeFragment();
+                ChangeFragment tab1 = new ChangeFragment(profile);
                 return tab1;
             }
             else             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
             {
                 if(position == 1) // if the position is 0 we are returning the First tab
                 {
-                    DoctorFragment tab2 = new DoctorFragment();
+                    DoctorFragment tab2 = new DoctorFragment(profile);
                     return tab2;
                 }
                 else{
                     if(position == 2) // if the position is 0 we are returning the First tab
                     {
-                        ParticientFragment tab3 = new ParticientFragment();
+                        ParticientFragment tab3 = new ParticientFragment(profile);
                         return tab3;
                     }
                     else{
                         if(position == 3) // if the position is 0 we are returning the First tab
                         {
-                            TicketDoctorFragment tab4 = new TicketDoctorFragment();
+                            TicketDoctorFragment tab4 = new TicketDoctorFragment(profile);
                             return tab4;
                         }
                         else{
                             if(position == 4) // if the position is 0 we are returning the First tab
                             {
-                                RegistrationFragment tab5 = new RegistrationFragment();
+                                RegistrationFragment tab5 = new RegistrationFragment(profile);
                                 return tab5;
                             }
 
@@ -68,7 +69,7 @@ public class RegistrationViewPagerAdapter extends FragmentStatePagerAdapter {
                 }
 
             }
-            TimetableFragment tab6 = new TimetableFragment();
+            TimetableFragment tab6 = new TimetableFragment(profile);
             return tab6;
         }
 
