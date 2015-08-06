@@ -25,6 +25,7 @@ import com.example.gleb.adapters.RecomendationAdapter;
 import com.example.gleb.dentistcard.DatabaseRequest;
 import com.example.gleb.dentistcard.Pattern;
 import com.example.gleb.dentistcard.R;
+import com.example.gleb.insert.InsertDoctor;
 import com.example.gleb.insert.InsertRecommendation;
 import com.example.gleb.tables.Recomendation;
 import com.mikepenz.materialdrawer.Drawer;
@@ -92,6 +93,11 @@ public class RecomendationFragment extends Fragment {
     protected HttpClient client;
     protected HttpPost post;
 
+    public String profile;
+
+    public RecomendationFragment(String profile) {
+        this.profile = profile;
+    }
 
     @Nullable
     @Override
@@ -113,6 +119,7 @@ public class RecomendationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), InsertRecommendation.class);
+                intent.putExtra(InsertRecommendation.PROFILE, profile);
                 startActivity(intent);
             }
         });
