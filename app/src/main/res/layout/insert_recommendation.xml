@@ -1,164 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView android:id="@+id/txtHeader"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:textStyle="bold"
-        android:textSize="22dp"
-        android:textColor="#FFFFFF"
-        android:padding="10dp"
-        android:text="@string/InsertRecommendation"
-        android:background="#336699" />
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/TicketHint"
-            android:id="@+id/ticketKodTextView"
-            android:layout_margin="15dp"
-            android:textSize="20dp"/>
-
-        <EditText
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:id="@+id/ticketKodEditText"
-            android:layout_gravity="center"
-            android:background="@drawable/insert_edittext"/>
+            android:background="?android:colorAccent"
+            android:elevation="4dp"
+            android:minHeight="?attr/actionBarSize"
+            android:transitionName="actionBar" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Diagnose"
-            android:id="@+id/diagnoseKodTextView"
-            android:layout_margin="15dp"
-            android:textSize="20dp"/>
-
-        <EditText
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:id="@+id/diagnoseKodEditText"
-            android:layout_gravity="center"
-            android:background="@drawable/insert_edittext"/>
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/ticketSpinner"
+                app:ms_multiline="false"
+                app:ms_hint="@string/Ticket"
+                app:ms_floatingLabelText="@string/Department"
+                app:ms_baseColor="?android:colorAccent"
+                app:ms_highlightColor="?android:colorAccent"
+                app:ms_errorColor="@android:color/black"
+                app:ms_arrowColor="?android:colorAccent"
+                app:ms_arrowSize="16dp"
+                app:ms_alignLabels="false"
+                app:ms_floatingLabelColor="?android:colorAccent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"/>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Therapy"
-            android:id="@+id/therapyTextView"
-            android:layout_margin="15dp"
-            android:textSize="20dp"/>
-
-        <EditText
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:id="@+id/therapyEditText"
-            android:layout_gravity="center"
-            android:background="@drawable/insert_edittext"/>
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/diagnoseSpinner"
+                app:ms_multiline="false"
+                app:ms_hint="@string/Diagnose"
+                app:ms_floatingLabelText="@string/Diagnose"
+                app:ms_baseColor="?android:colorAccent"
+                app:ms_highlightColor="?android:colorAccent"
+                app:ms_errorColor="@android:color/black"
+                app:ms_arrowColor="?android:colorAccent"
+                app:ms_arrowSize="16dp"
+                app:ms_alignLabels="false"
+                app:ms_floatingLabelColor="?android:colorAccent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"/>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Complaints"
-            android:id="@+id/complaintsTextView"
-            android:layout_margin="15dp"
-            android:textSize="20dp"/>
-
-        <EditText
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:id="@+id/complaintsEditText"
-            android:layout_gravity="center"
-            android:background="@drawable/insert_edittext"/>
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/therapyEditText"
+                android:hint="@string/Therapy"
+                android:textCursorDrawable="@drawable/text_cursor_cyan"
+                android:textSize="34sp"
+                android:textColor="?android:textColorTertiary"
+                app:met_baseColor="?android:colorAccent"
+                app:met_floatingLabel="highlight"
+                app:met_maxCharacters="60"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true"
+                android:layout_weight="1"/>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/HistoryIllness"
-            android:id="@+id/historyIllnessTextView"
-            android:layout_margin="15dp"
-            android:textSize="20dp"/>
-
-        <EditText
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:id="@+id/historyIllnessEditText"
-            android:layout_gravity="center"
-            android:background="@drawable/insert_edittext"/>
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/complaintsEditText"
+                android:hint="@string/Complaints"
+                android:textCursorDrawable="@drawable/text_cursor_cyan"
+                android:textSize="34sp"
+                android:textColor="?android:textColorTertiary"
+                app:met_baseColor="?android:colorAccent"
+                app:met_floatingLabel="highlight"
+                app:met_maxCharacters="60"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true"
+                android:layout_weight="1"/>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ObjectiveValues"
-            android:id="@+id/objectiveValuesTextView"
-            android:layout_margin="15dp"
-            android:textSize="20dp"/>
-
-        <EditText
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:id="@+id/objectiveValuesEditText"
-            android:layout_gravity="center"
-            android:background="@drawable/insert_edittext"/>
+            android:layout_height="wrap_content">
 
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/historyIllnessEditText"
+                android:hint="@string/HistoryIllness"
+                android:textCursorDrawable="@drawable/text_cursor_cyan"
+                android:textSize="34sp"
+                android:textColor="?android:textColorTertiary"
+                app:met_baseColor="?android:colorAccent"
+                app:met_floatingLabel="highlight"
+                app:met_maxCharacters="60"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/objectiveValuesEditText"
+                android:hint="@string/ObjectiveValues"
+                android:textCursorDrawable="@drawable/text_cursor_cyan"
+                android:textSize="34sp"
+                android:textColor="?android:textColorTertiary"
+                app:met_baseColor="?android:colorAccent"
+                app:met_floatingLabel="highlight"
+                app:met_maxCharacters="60"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/insertRecommendationButton"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/ripple"
+            android:stateListAnimator="@anim/anim"
+            android:src="@mipmap/ic_action_add"
+            android:elevation="1dp" />
     </LinearLayout>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Insert"
-        android:id="@+id/insertRecommendationButton"
-        android:layout_gravity="center"
-        android:layout_margin="15dp"/>
-</LinearLayout>
+</ScrollView>
