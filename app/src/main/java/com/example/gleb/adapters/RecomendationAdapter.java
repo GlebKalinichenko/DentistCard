@@ -58,12 +58,12 @@ public class RecomendationAdapter extends RecyclerView.Adapter<RecomendationAdap
 
     @Override
     public void onBindViewHolder(RecomendationViewHolder recomendationViewHolder, int i) {
-        recomendationViewHolder.ticketKodTextView.setText(recomendations.get(i).ticketKod);
-        recomendationViewHolder.diagnoseKodTextView.setText(recomendations.get(i).diagnoseKod);
-        recomendationViewHolder.therapyTextView.setText(recomendations.get(i).therapy);
-        recomendationViewHolder.complaintsTextView.setText(recomendations.get(i).complaints);
-        recomendationViewHolder.historyIllnessTextView.setText(recomendations.get(i).historyIllness);
-        recomendationViewHolder.objectiveValuesTextView.setText(recomendations.get(i).objectiveValues);
+        recomendationViewHolder.ticketKodTextView.setText("Пациент: " + recomendations.get(i).ticketKod);
+        recomendationViewHolder.diagnoseKodTextView.setText("Диагнозы: " + recomendations.get(i).diagnoseKod);
+        recomendationViewHolder.therapyTextView.setText("Лечение: " + recomendations.get(i).therapy);
+        recomendationViewHolder.complaintsTextView.setText("Симптоны: " + recomendations.get(i).complaints);
+        recomendationViewHolder.historyIllnessTextView.setText("История болезни: " + recomendations.get(i).historyIllness);
+        recomendationViewHolder.objectiveValuesTextView.setText("Объек. данные: " + recomendations.get(i).objectiveValues);
     }
 
     public void removeData(int position) {
