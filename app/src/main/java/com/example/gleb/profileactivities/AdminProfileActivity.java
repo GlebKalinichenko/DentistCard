@@ -1,6 +1,7 @@
 package com.example.gleb.profileactivities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.example.gleb.autoresationregistrator.Autoresation;
+import com.example.gleb.charts.ChartActivity;
 import com.example.gleb.dentistcard.R;
 import com.example.gleb.fragments.SlidingTabLayout;
 import com.example.gleb.viewpagers.AdminViewPagerAdapter;
@@ -31,6 +34,7 @@ import com.mikepenz.materialdrawer.model.interfaces.Nameable;
  * Created by gleb on 13.07.15.
  */
 public class AdminProfileActivity extends ProfilePattern {
+    public static final String TAG = "TAG";
     private CharSequence[] Titles = {
         "Смены","Страны", "Города", "Врачи", "Пациенты", "Билеты", "Типы врачей",
         "Диагнозы", "Квалификации", "Должности", "Рекомендации", "Регистрации"};
@@ -55,11 +59,11 @@ public class AdminProfileActivity extends ProfilePattern {
 
         drawer.addDrawerItems(
                 new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withBadge("99").withIdentifier(1),
-                new PrimaryDrawerItem().withName(R.string.drawer_item_free_play).withIcon(FontAwesome.Icon.faw_gamepad),
-                new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withBadge("6").withIdentifier(2),
+                new PrimaryDrawerItem().withName(R.string.ShowMail).withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(2),
+                new PrimaryDrawerItem().withName(R.string.SkillDoctor).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(3),
                 new SectionDrawerItem().withName(R.string.drawer_item_settings),
-                new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog),
-                new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_question).setEnabled(false),
+                new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(4),
+                new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_question).setEnabled(false).withIdentifier(5),
                 new DividerDrawerItem(),
                 new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_github).withBadge("12+").withIdentifier(1)
         );
@@ -86,17 +90,32 @@ public class AdminProfileActivity extends ProfilePattern {
                 }
                 if (drawerItem instanceof Badgeable) {
                     Badgeable badgeable = (Badgeable) drawerItem;
-                    if (badgeable.getBadge() != null) {
-                        // учтите, не делайте так, если ваш бейдж содержит символ "+"
-                        try {
-                            int badge = Integer.valueOf(badgeable.getBadge());
-                            if (badge > 0) {
-                                drawerResult.updateBadge(String.valueOf(badge - 1), position);
-                            }
-                        } catch (Exception e) {
-                            Log.d("test", "Не нажимайте на бейдж, содержащий плюс! :)");
-                        }
+                    int item = drawerItem.getIdentifier();
+                    switch(item){
+                        case 2:
+                            //new Loader("pop.yandex.ru", "pop3", "Makbluming@yandex.ua", "0954023873").execute();
+                            Intent intent = new Intent(AdminProfileActivity.this, Autoresation.class);
+                            startActivity(intent);
+                            Log.d(TAG, "RegistrationProfileActivity");
+                            break;
+
+                        case 3:
+                            Intent chartIntent = new Intent(AdminProfileActivity.this, ChartActivity.class);
+                            startActivity(chartIntent);
+                            break;
                     }
+
+//                    if (badgeable.getBadge() != null) {
+//                        // учтите, не делайте так, если ваш бейдж содержит символ "+"
+//                        try {
+//                            int badge = Integer.valueOf(badgeable.getBadge());
+//                            if (badge > 0) {
+//                                drawerResult.updateBadge(String.valueOf(badge - 1), position);
+//                            }
+//                        } catch (Exception e) {
+//                            Log.d("test", "Не нажимайте на бейдж, содержащий плюс! :)");
+//                        }
+//                    }
                 }
             }
         });
