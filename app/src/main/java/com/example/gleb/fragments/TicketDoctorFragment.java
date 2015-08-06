@@ -86,13 +86,10 @@ public class TicketDoctorFragment extends Fragment {
     protected HttpPost post;
 
     private String fullName;
+    public String profile;
 
-    public TicketDoctorFragment() {
-    }
-
-    public TicketDoctorFragment(String fullName) {
-        this.fullName = fullName;
-        Log.d(TAG, "TicketDoctorFragment " + fullName);
+    public TicketDoctorFragment(String profile) {
+        this.profile = profile;
     }
 
     @Nullable
@@ -115,6 +112,7 @@ public class TicketDoctorFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), InsertTicket.class);
+                intent.putExtra(InsertTicket.PROFILE, profile);
                 startActivity(intent);
             }
         });
@@ -140,7 +138,12 @@ public class TicketDoctorFragment extends Fragment {
 
                                     @Override
                                     public void onPositive(MaterialDialog dialog) {
-                                        new Updater(position).execute();
+                                        if (newDateReceptionEditText.getText().toString().equals("")) {
+                                            Toast.makeText(getActivity(), R.string.AddContent, Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+                                            new Updater(position).execute();
+                                        }
                                     }
                                 })
                                 .show();
@@ -208,103 +211,103 @@ public class TicketDoctorFragment extends Fragment {
 
         @Override
         protected String[] doInBackground(String... params) {
-//            //String with JSON
-//            String jsonContent = request.makeRequest("http://dentists.16mb.com/SelectLookupQuery/DoctorProfileLookup.php");
-//            //Fields of table tickets
-//
-//            Log.d(TAG, jsonContent);
-//            try {
-//                //create JSON array for parse it
-//                JSONArray array = new JSONArray(jsonContent);
-//                arrayIdTickets = new int[array.length()];
-//                arrayDoctorKod = new String[array.length()];
-//                arrayParticientKod = new String[array.length()];
-//                arrayDateReception = new String[array.length()];
-//                arrayOldIdDoctor = new int[array.length()];
-//                arrayOldIdRegistration = new int[array.length()];
-//
-//
-//                for (int i = 0; i < array.length(); i++) {
-//                    //parse of array
-//                    JSONObject jObject = array.getJSONObject(i);
-//                    arrayOldIdDoctor[i] = jObject.getInt("IdDoctor");
-//                    arrayOldIdRegistration[i] = jObject.getInt("IdRegistration");
-//                    arrayDoctorKod[i] = jObject.getString("Doctor");
-//                    arrayParticientKod[i] = jObject.getString("Particient");
-//                    arrayDateReception[i] = jObject.getString("DateReception");
-//
-//                    tickets.add(new Ticket(jObject.getString("Doctor"), jObject.getString("Particient"),
-//                            jObject.getString("DateReception")));
-//
-//                    Log.d(TAG, arrayDateReception[i]);
-//                }
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
+            //String with JSON
+            String jsonContent = request.makeRequest("http://dentists.16mb.com/SelectLookupQuery/TicketRegistrationProfileLookup.php");
+            //Fields of table tickets
 
-            client = new DefaultHttpClient();
-            post = new HttpPost("http://dentists.16mb.com/SelectLookupQuery/TicketDoctorProfileLookup.php");
-            HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); // Timeout
-            HttpResponse response;
-            JSONObject json = new JSONObject();
-
+            Log.d(TAG, jsonContent);
             try {
-                json.put("FIO", fullName);
+                //create JSON array for parse it
+                JSONArray array = new JSONArray(jsonContent);
+                arrayIdTickets = new int[array.length()];
+                arrayDoctorKod = new String[array.length()];
+                arrayParticientKod = new String[array.length()];
+                arrayDateReception = new String[array.length()];
+                arrayOldIdDoctor = new int[array.length()];
+                arrayOldIdRegistration = new int[array.length()];
 
-                post.setHeader("json", json.toString());
-                StringEntity se = new StringEntity(json.toString());
-                se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-                post.setEntity(se);
-                response = client.execute(post);
 
-                if (response != null) {
-                    InputStream in = response.getEntity().getContent(); // Get the
-                    Log.i("Read from Server", in.toString());
-                    BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                    StringBuilder sb = new StringBuilder();
-                    String line;
-                    while ((line = br.readLine()) != null) {
-                        sb.append(line + "\n");
-                    }
-                    br.close();
-                    Log.d(TAG, "Sb " + sb.toString());
-                    if (!sb.toString().equals("")) {
-                        JSONArray array = new JSONArray(sb.toString());
+                for (int i = 0; i < array.length(); i++) {
+                    //parse of array
+                    JSONObject jObject = array.getJSONObject(i);
+                    arrayOldIdDoctor[i] = jObject.getInt("IdDoctor");
+                    arrayOldIdRegistration[i] = jObject.getInt("IdRegistration");
+                    arrayDoctorKod[i] = jObject.getString("Doctor");
+                    arrayParticientKod[i] = jObject.getString("Particient");
+                    arrayDateReception[i] = jObject.getString("DateReception");
 
-                        try{
-                            //parse of array
-                            arrayIdTickets = new int[array.length()];
-                            arrayDoctorKod = new String[array.length()];
-                            arrayParticientKod = new String[array.length()];
-                            arrayDateReception = new String[array.length()];
-                            arrayOldIdDoctor = new int[array.length()];
-                            arrayOldIdRegistration = new int[array.length()];
+                    tickets.add(new Ticket(jObject.getString("Doctor"), jObject.getString("Particient"),
+                            jObject.getString("DateReception")));
 
-                            for (int i = 0; i < array.length(); i++) {
-                                //parse of array
-                                JSONObject jObject = array.getJSONObject(i);
-                                arrayOldIdDoctor[i] = jObject.getInt("IdDoctor");
-                                arrayOldIdRegistration[i] = jObject.getInt("IdRegistration");
-                                arrayDoctorKod[i] = jObject.getString("Doctor");
-                                arrayParticientKod[i] = jObject.getString("Particient");
-                                arrayDateReception[i] = jObject.getString("DateReception");
-
-                                tickets.add(new Ticket(jObject.getString("Doctor"), jObject.getString("Particient"),
-                                        jObject.getString("DateReception")));
-
-                                Log.d(TAG, arrayDateReception[i]);
-                            }
-                        }
-                        catch(Exception e){
-                            e.printStackTrace();
-                        }
-                    }
+                    Log.d(TAG, arrayDateReception[i]);
                 }
 
-            } catch (Exception e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+//            client = new DefaultHttpClient();
+//            post = new HttpPost("http://dentists.16mb.com/SelectLookupQuery/TicketDoctorProfileLookup.php");
+//            HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); // Timeout
+//            HttpResponse response;
+//            JSONObject json = new JSONObject();
+//
+//            try {
+//                json.put("FIO", fullName);
+//
+//                post.setHeader("json", json.toString());
+//                StringEntity se = new StringEntity(json.toString());
+//                se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+//                post.setEntity(se);
+//                response = client.execute(post);
+//
+//                if (response != null) {
+//                    InputStream in = response.getEntity().getContent(); // Get the
+//                    Log.i("Read from Server", in.toString());
+//                    BufferedReader br = new BufferedReader(new InputStreamReader(in));
+//                    StringBuilder sb = new StringBuilder();
+//                    String line;
+//                    while ((line = br.readLine()) != null) {
+//                        sb.append(line + "\n");
+//                    }
+//                    br.close();
+//                    Log.d(TAG, "Sb " + sb.toString());
+//                    if (!sb.toString().equals("")) {
+//                        JSONArray array = new JSONArray(sb.toString());
+//
+//                        try{
+//                            //parse of array
+//                            arrayIdTickets = new int[array.length()];
+//                            arrayDoctorKod = new String[array.length()];
+//                            arrayParticientKod = new String[array.length()];
+//                            arrayDateReception = new String[array.length()];
+//                            arrayOldIdDoctor = new int[array.length()];
+//                            arrayOldIdRegistration = new int[array.length()];
+//
+//                            for (int i = 0; i < array.length(); i++) {
+//                                //parse of array
+//                                JSONObject jObject = array.getJSONObject(i);
+//                                arrayOldIdDoctor[i] = jObject.getInt("IdDoctor");
+//                                arrayOldIdRegistration[i] = jObject.getInt("IdRegistration");
+//                                arrayDoctorKod[i] = jObject.getString("Doctor");
+//                                arrayParticientKod[i] = jObject.getString("Particient");
+//                                arrayDateReception[i] = jObject.getString("DateReception");
+//
+//                                tickets.add(new Ticket(jObject.getString("Doctor"), jObject.getString("Particient"),
+//                                        jObject.getString("DateReception")));
+//
+//                                Log.d(TAG, arrayDateReception[i]);
+//                            }
+//                        }
+//                        catch(Exception e){
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
 
             return arrayDateReception;
         }
