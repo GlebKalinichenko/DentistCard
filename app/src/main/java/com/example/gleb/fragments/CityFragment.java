@@ -27,6 +27,7 @@ import com.example.gleb.dentistcard.CountryActivity;
 import com.example.gleb.dentistcard.DatabaseRequest;
 import com.example.gleb.dentistcard.Pattern;
 import com.example.gleb.dentistcard.R;
+import com.example.gleb.insert.InsertChange;
 import com.example.gleb.insert.InsertCity;
 import com.example.gleb.insert.InsertCountry;
 import com.example.gleb.tables.City;
@@ -80,6 +81,12 @@ public class CityFragment extends Fragment {
     protected HttpClient client;
     protected HttpPost post;
 
+    public String profile;
+
+    public CityFragment(String profile) {
+        this.profile = profile;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -100,6 +107,7 @@ public class CityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), InsertCity.class);
+                intent.putExtra(InsertCity.PROFILE, profile);
                 startActivity(intent);
             }
         });
@@ -124,7 +132,12 @@ public class CityFragment extends Fragment {
 
                                     @Override
                                     public void onPositive(MaterialDialog dialog) {
-                                        new Updater(position).execute();
+                                        if (newCityEditText.getText().toString().equals("")) {
+                                            Toast.makeText(getActivity(), R.string.AddContent, Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+                                            new Updater(position).execute();
+                                        }
                                     }
                                 })
                                 .show();
