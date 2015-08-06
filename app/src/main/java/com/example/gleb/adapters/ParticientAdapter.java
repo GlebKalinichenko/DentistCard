@@ -58,12 +58,12 @@ public class ParticientAdapter extends RecyclerView.Adapter<ParticientAdapter.Pa
 
     @Override
     public void onBindViewHolder(ParticientViewHolder particientViewHolder, int i) {
-        particientViewHolder.FIOTextView.setText(particients.get(i).FIO);
-        particientViewHolder.addressTextView.setText(particients.get(i).address);
-        particientViewHolder.cityKodTextView.setText(particients.get(i).cityKod);
-        particientViewHolder.phoneNumberTextView.setText(particients.get(i).phoneNumber);
-        particientViewHolder.dateBornTextView.setText("Дата рождения " + particients.get(i).dateBorn);
-        particientViewHolder.fioParentTextView.setText("Родитель " + particients.get(i).FIOParent);
+        particientViewHolder.FIOTextView.setText("ФИО: " + particients.get(i).FIO);
+        particientViewHolder.addressTextView.setText("Адресс: " + particients.get(i).address);
+        particientViewHolder.cityKodTextView.setText("Город: " + particients.get(i).cityKod);
+        particientViewHolder.phoneNumberTextView.setText("Телефон: " + particients.get(i).phoneNumber);
+        particientViewHolder.dateBornTextView.setText("Дата рождения: " + particients.get(i).dateBorn);
+        particientViewHolder.fioParentTextView.setText("Родитель: " + particients.get(i).FIOParent);
     }
 
     public void removeData(int position) {
