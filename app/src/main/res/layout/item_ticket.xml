@@ -15,19 +15,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:textSize="15sp"/>
 
     <TextView
         android:id="@+id/doctorKod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/registrationKod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:textSize="20sp"/>
 </LinearLayout>
