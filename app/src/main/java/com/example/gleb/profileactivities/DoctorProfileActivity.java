@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.example.gleb.about.DoctorHelp;
 import com.example.gleb.dentistcard.DatabaseRequest;
 import com.example.gleb.dentistcard.Login;
 import com.example.gleb.dentistcard.R;
@@ -86,28 +87,6 @@ public class DoctorProfileActivity extends ProfilePattern {
         loadFreshTicket();
 
         new Loader().execute();
-
-        // Creating The AdminViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter =  new DoctorViewPagerAdapter(getSupportFragmentManager(), Titles, Numboftabs, fullName);
-
-        // Assigning ViewPager View and setting the adapter
-        pager = (ViewPager) findViewById(R.id.pager);
-        pager.setAdapter(adapter);
-
-        // Assiging the Sliding Tab Layout View
-        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
-        tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
-
-        // Setting Custom Color for the Scroll bar indicator of the Tab View
-        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-            @Override
-            public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.tabsScrollColor);
-            }
-        });
-
-        // Setting the ViewPager For the SlidingTabsLayout
-        tabs.setViewPager(pager);
     }
 
     public class Loader extends AsyncTask<String, String, String[]> {
@@ -189,7 +168,7 @@ public class DoctorProfileActivity extends ProfilePattern {
                 drawer.addDrawerItems(
                     new PrimaryDrawerItem().withName(R.string.drawer_item_tickets).withIcon(FontAwesome.Icon.faw_home).withBadge("+" + String.valueOf(freshTicket)).withIdentifier(1),
                     new PrimaryDrawerItem().withName(R.string.AllTicket).withIcon(FontAwesome.Icon.faw_gamepad).withBadge("+" + String.valueOf(arrayFreshTicket[0])).withIdentifier(2),
-                    new PrimaryDrawerItem().withName(R.string.AllParticient).withIcon(FontAwesome.Icon.faw_eye).withBadge("").withIdentifier(3),
+                    new PrimaryDrawerItem().withName(R.string.statistic).withIcon(FontAwesome.Icon.faw_eye).withBadge("").withIdentifier(3),
                     new SectionDrawerItem().withName(R.string.drawer_item_settings),
                     new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(4),
                     new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_question).setEnabled(false).withIdentifier(5),
@@ -201,7 +180,7 @@ public class DoctorProfileActivity extends ProfilePattern {
                 drawer.addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_tickets).withIcon(FontAwesome.Icon.faw_home).withBadge("").withIdentifier(1),
                         new PrimaryDrawerItem().withName(R.string.AllTicket).withIcon(FontAwesome.Icon.faw_gamepad).withBadge("+" + String.valueOf(arrayFreshTicket[0])).withIdentifier(2),
-                        new PrimaryDrawerItem().withName(R.string.AllParticient).withIcon(FontAwesome.Icon.faw_eye).withBadge("").withIdentifier(3),
+                        new PrimaryDrawerItem().withName(R.string.statistic).withIcon(FontAwesome.Icon.faw_eye).withBadge("").withIdentifier(3),
                         new SectionDrawerItem().withName(R.string.drawer_item_settings),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(4),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_question).setEnabled(false).withIdentifier(5),
@@ -233,17 +212,22 @@ public class DoctorProfileActivity extends ProfilePattern {
                     if (drawerItem instanceof Badgeable) {
                         Badgeable badgeable = (Badgeable) drawerItem;
                         int item = drawerItem.getIdentifier();
+                        Intent intent;
 
                         switch(item){
                             case 1: saveFreshTicket(); break;
                             case 3:
-                                Intent ticketIntent = new Intent(DoctorProfileActivity.this, Statistic.class);
-                                ticketIntent.putExtra(Statistic.TICKET, fullName);
-                                startActivity(ticketIntent);
+                                intent = new Intent(DoctorProfileActivity.this, Statistic.class);
+                                intent.putExtra(Statistic.TICKET, fullName);
+                                intent.putExtra(Statistic.ALLTICKET, freshTicket);
+                                intent.putExtra(Statistic.FRESHTICKET, arrayFreshTicket[0]);
+                                startActivity(intent);
                                 break;
                             case 4:
-                                Intent intent = new Intent(DoctorProfileActivity.this, DoctorHelp.class);
+                                intent = new Intent(DoctorProfileActivity.this, DoctorHelp.class);
                                 intent.putExtra(Login.FULLNAME, fullName);
+                                intent.putExtra(DoctorHelp.ALLTICKET, freshTicket);
+                                intent.putExtra(DoctorHelp.FRESHTICKET, arrayFreshTicket[0]);
                                 startActivity(intent);
                                 break;
 
@@ -281,6 +265,28 @@ public class DoctorProfileActivity extends ProfilePattern {
                 }
             });
             drawer.build();
+
+            // Creating The AdminViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
+            adapter =  new DoctorViewPagerAdapter(getSupportFragmentManager(), Titles, Numboftabs, fullName, freshTicket, arrayFreshTicket[0]);
+
+            // Assigning ViewPager View and setting the adapter
+            pager = (ViewPager) findViewById(R.id.pager);
+            pager.setAdapter(adapter);
+
+            // Assiging the Sliding Tab Layout View
+            tabs = (SlidingTabLayout) findViewById(R.id.tabs);
+            tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
+
+            // Setting Custom Color for the Scroll bar indicator of the Tab View
+            tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+                @Override
+                public int getIndicatorColor(int position) {
+                    return getResources().getColor(R.color.tabsScrollColor);
+                }
+            });
+
+            // Setting the ViewPager For the SlidingTabsLayout
+            tabs.setViewPager(pager);
         }
     }
 
