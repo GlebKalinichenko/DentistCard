@@ -25,6 +25,7 @@ import com.example.gleb.adapters.RecomendationAdapter;
 import com.example.gleb.dentistcard.DatabaseRequest;
 import com.example.gleb.dentistcard.Pattern;
 import com.example.gleb.dentistcard.R;
+import com.example.gleb.insert.InsertDoctor;
 import com.example.gleb.insert.InsertRecommendation;
 import com.example.gleb.tables.Particient;
 import com.example.gleb.tables.Recomendation;
@@ -51,7 +52,7 @@ import java.util.List;
 /**
  * Created by gleb on 13.07.15.
  */
-public class RecomendationDoctorFragment extends Fragment {
+public class RecomendationFragmentDoctorProfile extends Fragment {
     public static final String TAG = "TAG";
     private DatabaseRequest request = new DatabaseRequest();
     private RecomendationAdapter adapter;
@@ -75,6 +76,13 @@ public class RecomendationDoctorFragment extends Fragment {
     public Spinner ticketKodSpinner;
     public Spinner diagnoseKodSpinner;
 
+    public int[] arrayIdTicket;
+    public int[] arrayIdDiagnose;
+    public String[] arrayTicket;
+    public String[] arrayDiagnose;
+    public String[] arrayParticient;
+    public String[] arrayTicketParticient;
+
     public String[] arrayDateReceptionSpinner;
     public int[] arrayIdTicketSpinner;
 
@@ -96,9 +104,15 @@ public class RecomendationDoctorFragment extends Fragment {
     protected HttpPost post;
 
     public String fullName;
+    public int freshTicket;
+    public int allTicket;
+    public String profile;
 
-    public RecomendationDoctorFragment(String fullName) {
+    public RecomendationFragmentDoctorProfile(String fullName, int freshTicket, int allTicket, String profile) {
         this.fullName = fullName;
+        this.freshTicket = freshTicket;
+        this.allTicket = allTicket;
+        this.profile = profile;
     }
 
     @Nullable
@@ -121,6 +135,10 @@ public class RecomendationDoctorFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), InsertRecommendation.class);
+                intent.putExtra(InsertRecommendation.PROFILE, profile);
+                intent.putExtra(InsertRecommendation.FULLNAME, fullName);
+                intent.putExtra(InsertDoctor.ALLTICKET, allTicket);
+                intent.putExtra(InsertDoctor.FRESHTICKET, freshTicket);
                 startActivity(intent);
             }
         });
@@ -146,7 +164,13 @@ public class RecomendationDoctorFragment extends Fragment {
 
                                     @Override
                                     public void onPositive(MaterialDialog dialog) {
-                                        new Updater(position).execute();
+                                        if (newTherapyEditText.getText().toString().equals("") || newComplaintsEditText.getText().toString().equals("") ||
+                                                newHistoryIllnessEditText.getText().toString().equals("") || newObjectiveValuesEditText.getText().toString().equals("")){
+                                            Toast.makeText(getActivity(), R.string.AddContent, Toast.LENGTH_SHORT).show();
+                                        }
+                                        else{
+                                            new Updater(position).execute();
+                                        }
                                     }
                                 })
                                 .show();
@@ -348,7 +372,7 @@ public class RecomendationDoctorFragment extends Fragment {
 
             try {
                 json.put("oldTicketKod", arrayOldIdTicket[oldPositionTicket]);
-                json.put("newTicketKod", arrayIdTicketSpinner[positionTicketSpinner]);
+                json.put("newTicketKod", arrayIdTicket[positionTicketSpinner]);
 
                 json.put("oldDiagnoseKod", arrayOldIdDiagnose[oldPositionDiagnose]);
                 json.put("newDiagnoseKod", arrayIdDiagnoseSpinner[positionDiagnoseSpinner]);
@@ -437,36 +461,93 @@ public class RecomendationDoctorFragment extends Fragment {
 
         @Override
         protected String[] doInBackground(String... params) {
-            String jsonContent = request.makeRequest("http://dentists.16mb.com/SelectQuery/TicketScript.php");
+//            String jsonContent = request.makeRequest("http://dentists.16mb.com/SelectQuery/TicketScript.php");
+//
+//            Log.d(TAG, jsonContent);
+//            try {
+//                JSONArray array = new JSONArray(jsonContent);
+//                arrayDateReceptionSpinner = new String[array.length()];
+//                arrayIdTicketSpinner = new int[array.length()];
+//
+//                for (int i = 0; i < array.length(); i++){
+//                    JSONObject jObject = array.getJSONObject(i);
+//                    String dateReception = jObject.getString("DateReception");
+//                    int idTicket = jObject.getInt("IdTicket");
+//
+//                    arrayDateReceptionSpinner[i] = dateReception;
+//                    arrayIdTicketSpinner[i] = idTicket;
+//                }
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//            return arrayDateReceptionSpinner;
 
-            Log.d(TAG, jsonContent);
+            client = new DefaultHttpClient();
+            post = new HttpPost("http://dentists.16mb.com/SelectLookupQuery/SelectTicketParticient.php");
+            HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); // Timeout
+            HttpResponse response;
+            JSONObject json = new JSONObject();
+
             try {
-                JSONArray array = new JSONArray(jsonContent);
-                arrayDateReceptionSpinner = new String[array.length()];
-                arrayIdTicketSpinner = new int[array.length()];
+                json.put("FIO", fullName);
 
-                for (int i = 0; i < array.length(); i++){
-                    JSONObject jObject = array.getJSONObject(i);
-                    String dateReception = jObject.getString("DateReception");
-                    int idTicket = jObject.getInt("IdTicket");
+                post.setHeader("json", json.toString());
+                StringEntity se = new StringEntity(json.toString());
+                se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+                post.setEntity(se);
+                response = client.execute(post);
 
-                    arrayDateReceptionSpinner[i] = dateReception;
-                    arrayIdTicketSpinner[i] = idTicket;
+                if (response != null) {
+                    InputStream in = response.getEntity().getContent(); // Get the
+                    Log.i("Read from Server", in.toString());
+                    BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+                    Log.d(TAG, "Sb " + sb.toString());
+                    if (!sb.toString().equals("")) {
+                        JSONArray array = new JSONArray(sb.toString());
+
+                        try{
+                            arrayIdTicket = new int[array.length()];
+                            arrayTicket = new String[array.length()];
+                            arrayParticient = new String[array.length()];
+                            arrayTicketParticient = new String[array.length()];
+
+                            for (int i = 0; i < array.length(); i++) {
+                                //parse of array
+                                JSONObject jObject = array.getJSONObject(i);
+                                arrayIdTicket[i] = jObject.getInt("IdTicket");
+                                arrayTicket[i] = jObject.getString("DateReception");
+                                arrayParticient[i] = jObject.getString("FIO");
+                                arrayTicketParticient[i] = jObject.getString("FIO") + " " + jObject.getString("DateReception");
+
+                                Log.d(TAG, arrayTicket[i]);
+                            }
+                        }
+                        catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
                 }
 
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            return arrayDateReceptionSpinner;
+            return null;
         }
 
         @Override
         protected void onPostExecute(String[] value) {
-            ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayDateReceptionSpinner);
+            ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayTicketParticient);
             adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             ticketKodSpinner.setAdapter(adapterSpinner);
-
         }
     }
 
