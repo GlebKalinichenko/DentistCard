@@ -51,6 +51,7 @@
                 android:singleLine="true"
                 android:drawableLeft="@drawable/email"
                 android:hint="@string/Email"
+                android:textColor="@android:color/black"
                 android:background="@drawable/edittext_default_bg"
                 android:padding="10dp"
                 android:textColorHint="#bbbbbb"/>
@@ -62,6 +63,7 @@
                 android:password="true"
                 android:drawableLeft="@drawable/password"
                 android:hint="@string/Password"
+                android:textColor="@android:color/black"
                 android:background="@drawable/edittext_bottom_bg"
                 android:layout_marginTop="-2dp"
                 android:padding="10dp"
