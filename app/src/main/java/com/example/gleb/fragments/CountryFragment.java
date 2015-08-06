@@ -25,6 +25,7 @@ import com.example.gleb.dentistcard.DatabaseRequest;
 import com.example.gleb.dentistcard.Pattern;
 import com.example.gleb.dentistcard.R;
 import com.example.gleb.insert.InsertCountry;
+import com.example.gleb.insert.InsertTicket;
 import com.example.gleb.tables.Country;
 import com.mikepenz.materialdrawer.Drawer;
 
@@ -68,6 +69,12 @@ public class CountryFragment extends Fragment {
     protected HttpClient client;
     protected HttpPost post;
 
+    public String profile;
+
+    public CountryFragment(String profile) {
+        this.profile = profile;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.countryactivity,container,false);
@@ -87,6 +94,7 @@ public class CountryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), InsertCountry.class);
+                intent.putExtra(InsertCountry.PROFILE, profile);
                 startActivity(intent);
             }
         });
@@ -109,7 +117,13 @@ public class CountryFragment extends Fragment {
 
                                     @Override
                                     public void onPositive(MaterialDialog dialog) {
-                                        new Updater().execute();
+                                        if (newCountryEditText.getText().toString().equals("")) {
+                                            Toast.makeText(getActivity(), R.string.AddContent, Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+
+                                            new Updater().execute();
+                                        }
                                     }
                                 })
                                 .show();
