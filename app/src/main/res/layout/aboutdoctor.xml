@@ -1,28 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:colorAccent"
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize"
+        android:transitionName="actionBar" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/DoctorHint"
-            android:textColor="@android:color/black"
-            android:id="@+id/fioLabelTextView"
-            android:textSize="30sp"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/fioTextView"
-            android:textColor="@android:color/black"
-            android:textSize="30sp"
+            android:id="@+id/fioDoctorEditText"
+            android:hint="@string/DoctorHint"
+            android:textCursorDrawable="@drawable/text_cursor_cyan"
+            android:textSize="34sp"
+            android:layout_marginTop="40dp"
+            android:textColor="?android:textColorTertiary"
+            app:met_baseColor="?android:colorAccent"
+            app:met_floatingLabel="highlight"
+            app:met_maxCharacters="60"
+            app:met_primaryColor="?colorAccent"
+            app:met_singleLineEllipsis="true"
             android:layout_weight="1"/>
     </LinearLayout>
 
@@ -31,44 +41,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/PostHint"
-            android:textColor="@android:color/black"
-            android:id="@+id/postLabelTextView"
-            android:textSize="30sp"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/postTextView"
-            android:textColor="@android:color/black"
-            android:textSize="30sp"
-            android:layout_weight="1"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/KvalificationHint"
-            android:textColor="@android:color/black"
-            android:id="@+id/kvalificationLabelTextView"
-            android:textSize="25sp"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/kvalificationTextView"
-            android:textColor="@android:color/black"
-            android:textSize="25sp"
+            android:id="@+id/postEditText"
+            android:hint="@string/PostHint"
+            android:textCursorDrawable="@drawable/text_cursor_cyan"
+            android:textSize="34sp"
+            android:layout_marginTop="40dp"
+            android:textColor="?android:textColorTertiary"
+            app:met_baseColor="?android:colorAccent"
+            app:met_floatingLabel="highlight"
+            app:met_maxCharacters="60"
+            app:met_primaryColor="?colorAccent"
+            app:met_singleLineEllipsis="true"
             android:layout_weight="1"/>
     </LinearLayout>
 
@@ -77,21 +63,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/DepartmentDoctor"
-            android:textColor="@android:color/black"
-            android:id="@+id/departmentLabelTextView"
-            android:textSize="30sp"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/departmentTextView"
-            android:textColor="@android:color/black"
-            android:textSize="30sp"
+            android:id="@+id/kvalificationEditText"
+            android:hint="@string/KvalificationHint"
+            android:textCursorDrawable="@drawable/text_cursor_cyan"
+            android:textSize="34sp"
+            android:layout_marginTop="40dp"
+            android:textColor="?android:textColorTertiary"
+            app:met_baseColor="?android:colorAccent"
+            app:met_floatingLabel="highlight"
+            app:met_maxCharacters="60"
+            app:met_primaryColor="?colorAccent"
+            app:met_singleLineEllipsis="true"
             android:layout_weight="1"/>
     </LinearLayout>
 
@@ -100,21 +85,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Expirience"
-            android:textColor="@android:color/black"
-            android:id="@+id/expirienceLabelTextView"
-            android:textSize="30sp"
+            android:id="@+id/departmentEditText"
+            android:hint="@string/DepartmentDoctor"
+            android:textCursorDrawable="@drawable/text_cursor_cyan"
+            android:textSize="34sp"
+            android:layout_marginTop="40dp"
+            android:textColor="?android:textColorTertiary"
+            app:met_baseColor="?android:colorAccent"
+            app:met_floatingLabel="highlight"
+            app:met_maxCharacters="60"
+            app:met_primaryColor="?colorAccent"
+            app:met_singleLineEllipsis="true"
             android:layout_weight="1"/>
+    </LinearLayout>
 
-        <TextView
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/expirienceTextView"
-            android:textColor="@android:color/black"
-            android:textSize="30sp"
+            android:id="@+id/expirienceEditText"
+            android:hint="@string/Expirience"
+            android:textCursorDrawable="@drawable/text_cursor_cyan"
+            android:textSize="34sp"
+            android:layout_marginTop="40dp"
+            android:textColor="?android:textColorTertiary"
+            app:met_baseColor="?android:colorAccent"
+            app:met_floatingLabel="highlight"
+            app:met_maxCharacters="60"
+            app:met_primaryColor="?colorAccent"
+            app:met_singleLineEllipsis="true"
             android:layout_weight="1"/>
     </LinearLayout>
 
