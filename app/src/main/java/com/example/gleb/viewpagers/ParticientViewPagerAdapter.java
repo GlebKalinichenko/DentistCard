@@ -29,33 +29,34 @@ public class ParticientViewPagerAdapter extends FragmentStatePagerAdapter {
     //This method return the fragment for the every position in the View Pager
     @Override
     public Fragment getItem(int position) {
+        String profile = "particient";
 
 
         if (position == 0) // if the position is 0 we are returning the First tab
         {
-            ParticientFragment tab1 = new ParticientFragment();
+            ParticientFragment tab1 = new ParticientFragment(profile);
             return tab1;
         } else             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
         {
             if (position == 1) // if the position is 0 we are returning the First tab
             {
-                DoctorFragment tab2 = new DoctorFragment();
+                DoctorFragment tab2 = new DoctorFragment(profile);
                 return tab2;
             } else {
                 if (position == 2) // if the position is 0 we are returning the First tab
                 {
-                    RecomendationFragment tab3 = new RecomendationFragment();
+                    RecomendationFragment tab3 = new RecomendationFragment(profile);
                     return tab3;
                 }
                 else {
                     if (position == 3) // if the position is 0 we are returning the First tab
                     {
-                        ChangeFragment tab4 = new ChangeFragment();
+                        ChangeFragment tab4 = new ChangeFragment(profile);
                         return tab4;
                     }
                 }
             }
-            TicketDoctorFragment tab5 = new TicketDoctorFragment();
+            TicketDoctorFragment tab5 = new TicketDoctorFragment(profile);
             return tab5;
         }
     }
