@@ -25,6 +25,7 @@ import com.example.gleb.adapters.ParticientAdapter;
 import com.example.gleb.dentistcard.DatabaseRequest;
 import com.example.gleb.dentistcard.Pattern;
 import com.example.gleb.dentistcard.R;
+import com.example.gleb.insert.InsertDoctor;
 import com.example.gleb.insert.InsertParticient;
 import com.example.gleb.tables.Particient;
 import com.example.gleb.tables.Ticket;
@@ -51,7 +52,7 @@ import java.util.List;
 /**
  * Created by gleb on 13.07.15.
  */
-public class ParticientDoctorFragment extends Fragment {
+public class ParticientDoctorProfile extends Fragment {
     public static final String TAG = "TAG";
     private DatabaseRequest request = new DatabaseRequest();
     private int[] arrayIdParticients = null;
@@ -91,9 +92,15 @@ public class ParticientDoctorFragment extends Fragment {
     protected HttpPost post;
 
     public String fullName;
+    public int freshTicket;
+    public int allTicket;
+    public String profile;
 
-    public ParticientDoctorFragment(String fullName) {
+    public ParticientDoctorProfile(String fullName, int freshTicket, int allTicket, String profile) {
         this.fullName = fullName;
+        this.freshTicket = freshTicket;
+        this.allTicket = allTicket;
+        this.profile = profile;
     }
 
     @Nullable
@@ -116,6 +123,9 @@ public class ParticientDoctorFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), InsertParticient.class);
+                intent.putExtra(InsertParticient.PROFILE, profile);
+                intent.putExtra(InsertParticient.ALLTICKET, allTicket);
+                intent.putExtra(InsertParticient.FRESHTICKET, freshTicket);
                 startActivity(intent);
             }
         });
@@ -140,7 +150,14 @@ public class ParticientDoctorFragment extends Fragment {
 
                                     @Override
                                     public void onPositive(MaterialDialog dialog) {
-                                        new Updater(position).execute();
+                                        if (newFIOEditText.getText().toString().equals("") || newAddressEditText.getText().toString().equals("")
+                                                || newDateBornEditText.getText().toString().equals("") || newPhoneEditText.getText().toString().equals("")){
+                                            Toast.makeText(getActivity(), R.string.AddContent, Toast.LENGTH_SHORT).show();
+                                        }
+                                        else{
+                                            new Updater(position).execute();
+                                        }
+
                                     }
                                 })
                                 .show();
@@ -220,45 +237,6 @@ public class ParticientDoctorFragment extends Fragment {
 
         @Override
         protected String[] doInBackground(String... params) {
-            //String with JSON
-//            String jsonContent = request.makeRequest("http://dentists.16mb.com/SelectLookupQuery/SelectParticientLookup.php");
-//            //Fields of table DoctorsActivity
-//
-//            Log.d(TAG, jsonContent);
-//            try {
-//                //create JSON array for parse it
-//                JSONArray array = new JSONArray(jsonContent);
-//                arrayIdParticients = new int[array.length()];
-//                arrayFIO = new String[array.length()];
-//                arrayAddreses = new String[array.length()];
-//                arrayLookupCityKod = new String[array.length()];
-//                arrayDateBorn = new String[array.length()];
-//                arrayFIOParent = new String[array.length()];
-//                arrayPhoneNumber = new String[array.length()];
-//                arrayOldIdCity = new int[array.length()];
-//
-//
-//                for (int i = 0; i < array.length(); i++) {
-//                    //parse of array
-//                    JSONObject jObject = array.getJSONObject(i);
-//                    arrayFIO[i] = jObject.getString("FIO");
-//                    arrayAddreses[i] = jObject.getString("Address");
-//                    arrayDateBorn[i] = jObject.getString("DateBorn");
-//                    arrayPhoneNumber[i] = jObject.getString("PhoneNumber");
-//                    arrayFIOParent[i] = jObject.getString("FIOParent");
-//                    arrayLookupCityKod[i] = jObject.getString("City");
-//                    arrayOldIdCity[i] = jObject.getInt("IdCity");
-//
-//                    particients.add(new Particient(jObject.getString("FIO"), jObject.getString("Address"), jObject.getString("City"),
-//                            jObject.getString("PhoneNumber"), jObject.getString("DateBorn"), jObject.getString("FIOParent")));
-//
-//                    Log.d(TAG, arrayFIO[i]);
-//                }
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-
             client = new DefaultHttpClient();
             post = new HttpPost("http://dentists.16mb.com/SelectLookupQuery/ParticientDoctorProfile.php");
             HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); // Timeout
